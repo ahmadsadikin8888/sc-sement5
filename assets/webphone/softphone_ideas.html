@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+
+
+<!--  
+This file contains the source code of the softphone skin. To add or remove any elements of the skin, you have to edit this file.
+The skin is built as a single-page application.
+Each page starts with a <div id="page_[PAGE_NAME]" class="all_app_pages" data-role="page"> element, containing attribute: data-role="page"
+The content of the page can be found in <div> element with attribute: class="ui-content"
+The skin API can be found in file: webphone_api.js.
+Read more details in the webphone documentation: "Web Dialer/Softphone" chapter.
+-->
+
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    
+    <link rel="shortcut icon" href="favicon.ico" />
+    <title>Softphone</title>
+
+
+    <link rel="stylesheet" href="css/softphone/index.css" />
+    <!-- Themes -->
+    <link rel="stylesheet" href="css/softphone/themes/wphone_1.0.css" />
+    <!-- instead of: <link rel="stylesheet" href="css/jquery.mobile-1.4.2.min.css" />-->
+    <link rel="stylesheet" href="css/softphone/themes/jquery.mobile.icons.min.css" />
+    <link rel="stylesheet" href="css/softphone/jquery.mobile.structure-1.4.2.css" />
+    <link rel="stylesheet" href="css/softphone/mainlayout.css" />
+
+    <script>window.pageissdk = false;</script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="webphone_api.js?jscodeversion=827"></script>
+
+
+</head>
+
+<body>
+
+    <input type="text" id="statusna" value="Registering">
+    <input type="number" id="status_call" value="0">
+    <!-- iframe used for attempting to load a custom protocol -->
+
+    <script>
+        // IMPORTANT: Wait until the webphone is loaded, before calling any API functions
+        function runningwell() {
+            // setInterval(function () {
+                var register_check = webphone_api.isregistered();
+                $("#statusna").val('Check Registered');
+                // alert(register_check);
+                if (register_check) {
+                    $("#statusna").val('Check In Call');
+                    var in_call = webphone_api.isincall();
+                    if (!in_call) {
+                        var status_call = $("#status_call").val();
+                        if (status_call == 0) {
+                            $("#statusna").val('Call To Number 61081221609591');
+                            $("#status_call").val(1);
+                            webphone_api.call('61081221609591');
+                        }
+
+                    }
+                }
+            // }, 4000);
+            // setTimeout(function(){ alert("Hello"); }, 3000);
+        }
+
+
+        webphone_api.onAppStateChange(function (state) {
+            if (state === 'loaded') {
+
+                //set parameters (alternatively these can be also preset in your html)
+                webphone_api.setparameter('serveraddress', '10.194.176.152'); // Replace the word in uppercase with your SIP
+                webphone_api.setparameter('username', '1752'); // Replace the word in uppercase with a valid SIP extension
+                webphone_api.setparameter('password', 'TAMDCS147'); // Replace the word in uppercase with the password for the
+                //see the ï¿½Parametersï¿½ section in the documentation for more options
+
+                //start the webphone (optional but recommended)
+                webphone_api.start();
+                //make a call (usually initiated by user action, such as click on a click to call button)
+                // var register_check = webphone_api.isregistered();
+                // if (register_check) {
+                //     webphone_api.call('61081221609591');
+
+                // }
+
+
+                //hangup
+                // webphone_api.hangup();
+                //send instant message
+                // webphone_api.sendchat(number, message);
+
+            }
+        });
+        runningwell();
+
+    </script>
+</body>
+
+</html>

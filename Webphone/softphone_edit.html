@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+
+
+<!--  
+This file contains the source code of the softphone skin. To add or remove any elements of the skin, you have to edit this file.
+The skin is built as a single-page application.
+Each page starts with a <div id="page_[PAGE_NAME]" class="all_app_pages" data-role="page"> element, containing attribute: data-role="page"
+The content of the page can be found in <div> element with attribute: class="ui-content"
+The skin API can be found in file: webphone_api.js.
+Read more details in the webphone documentation: "Web Dialer/Softphone" chapter.
+-->
+
+
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="viewport"
+        content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="shortcut icon" href="favicon.ico" />
+    <title>Softphone</title>
+
+    <link rel="stylesheet" href="css/softphone/index.css" />
+    <!-- Themes -->
+    <link rel="stylesheet" href="css/softphone/themes/wphone_1.0.css" />
+    <!-- instead of: <link rel="stylesheet" href="css/jquery.mobile-1.4.2.min.css" />-->
+    <link rel="stylesheet" href="css/softphone/themes/jquery.mobile.icons.min.css" />
+    <link rel="stylesheet" href="css/softphone/jquery.mobile.structure-1.4.2.css" />
+    <link rel="stylesheet" href="css/softphone/mainlayout.css" />
+
+    <script>window.pageissdk = false;</script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="webphone_api.js?jscodeversion=827"></script>
+
+
+</head>
+
+<body>
+
+    <div class="clear"></div>
+    <div id="loading_bg_txt">Loading App...</div>
+    <div class="app" id="phone_app_main_container">
+
+        <div id="js_not_enabled">Enable JavaScript or click the &quot;Allow&quot; button in your browser!!!</div>
+        <script
+            type="text/javascript">document.getElementById('js_not_enabled').style.display = 'none'; try { document.getElementById('phone_app_main_container').style.display = 'none'; } catch (err) { }</script>
+
+        <!-- Settings Page -->
+        <div id="page_settings" class="all_app_pages" data-role="page">
+            
+
+            <div id="page_settings_content" role="main" class="ui-content" data-theme="b" data-content-theme="b">
+                <ul id="settings_list" class="mlistview" data-role="listview" data-theme="b" data-divider-theme="b"
+                    data-inset="true" data-filter="true" data-filter-placeholder="Search Settings">
+                </ul>
+                <div id="loginpage_container" class="ui-field-contain">
+                    <div id="loginpage">
+                        <div id="logologinpage">
+                            <!--<img src="images/logo.png" style="border: 0;">&nbsp;&nbsp;<div></div>-->
+                        </div>
+                        <input name="lp_serveraddress" id="lp_serveraddress" placeholder="Server" value="" type="text"
+                            autocapitalize="off">
+                        <input name="lp_username" id="lp_username" placeholder="Username" value="" type="text"
+                            autocapitalize="off">
+                        <input name="lp_password" id="lp_password" placeholder="Password" value="" type="text"
+                            autocapitalize="off">
+                        <button id="lp_btn_login" class="ui-btn ui-btn-corner-all ui-btn-b noshadow">Login</button>
+                        <a href="javascript:;" id="a_newuser" target="_blank">Sign up</a><br />
+                        <a href="javascript:;" id="a_forgotpassword" target="_blank">Forgot password</a>
+                        <button id="lp_btn_custom" class="ui-btn ui-btn-corner-all ui-btn-b noshadow"
+                            style="display:none;">_Custom</button>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <!-- END Settings Page -->
+
+        <!-- Dialpad Page -->
+        <div id="page_dialpad" class="all_app_pages" data-role="page" data-theme="b">
+            <input type="text" id="statusmna" value="loaded">
+            <input type="text" id="status_call" value="0">
+            <!--Notification panel-->
+            <div data-role="panel" id="dialpad_not" class="notification_panel" data-position="left"
+                data-display="overlay" data-theme="b">
+                <div class="not_panel_title">_Notifications</div>
+                <ul class="notification_list" id="dialpad_notification_list" data-role="listview" data-inset="true"
+                    data-icon="false" data-theme="b">
+                    <!--<li data-role="divider" data-theme="b">Notifications</li>-->
+                    <!--<li>
+                <a id="dialpad_notitem_[NOTID]" class="nt_anchor">
+                    <div class="nt_title">Missed call from:</div>
+                    <div class="nt_desc">1234335358</div>
+                    <div class="nt_date">Aug, 26 10:55</div>
+                </a>
+                <a id="dialpad_notmenu_[NOTID]" class="ui-btn ui-btn-inline ui-icon-delete nt_menu">hint_clear</a>
+            </li>-->
+                </ul>
+                <a href="javascript:;" data-rel="close"
+                    class="ui-btn ui-mini ui-shadow ui-corner-all ui-btn-b ui-btn-inline not_close_btn">_Close</a>
+            </div>
+            <!--End notification panel-->
+            
+           
+        </div>
+        <!-- END Dialpad Page -->
+
+
+        <!-- Call Page -->
+        <div id="page_call" class="all_app_pages" data-role="page" data-theme="b">
+            <div id="call_header" data-role="header">
+                <div id="call_additional_header">
+                    <div class="additional_header_left">
+                        <span id="app_name_call"></span>
+                    </div>
+                    <div class="additional_header_right">
+                        <a href="#call_menu" id="btn_call_menu" data-rel="popup"
+                            class="btn_toolbar_menu ui-btn ui-icon-bars ui-btn-icon-notext" data-inline="true"
+                            data-transition="slidedown">Menu</a>
+
+                        <div id="call_menu" class="options_menu" data-role="popup" data-theme="a">
+                            <ul data-role="listview" id="call_menu_ul" data-inset="true" data-theme="a"
+                                data-icon="false">
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="separator_line_thick">
+                        <!--//-->
+                    </div>
+                </div>
+                <div class="status_container">
+                    <img src="images/icon_encrypt.png" class="img_encrypt" title="Encrypted">
+                    <div id="calledcaller">&nbsp;</div>
+                    <div id="call_duration">&nbsp;</div>
+                    <div id="status_call">&nbsp;</div>
+                </div>
+                <div class="clear_float">
+                    <!--//-->
+                </div>
+            </div>
+            <div id="page_call_content" role="main" class="ui-content">
+                <div id="mlcontainer" style="display: none;">
+                    <div class="separator_line_thick">
+                        <!--//-->
+                    </div>
+                    <div id="ml_buttons">
+
+                        <div id="hangup_layout">
+                            <button data-theme="d" class="noshadow" id="btn_hangup"><img id="btn_hangup_img"
+                                    src="images/btn_hangup_txt.png" alt="hangup" /></button>
+                        </div>
+                    </div>
+
+                    <div class="separator_color_bg">
+                        <!--//-->
+                    </div>
+
+                    <!--<div id="callfunctions_layout">
+            <div class="callfunc_btn_container">
+                <button class="ui-btn callfunc_btn noshadow" data-theme="b" id="btn_[REPLACESTR]">
+                    <img src="images/btn_[REPLACESTR]_txt.png" />
+                    <span class="callfunc_status" id="[REPLACESTR]_status" >&nbsp;</span>
+                </button>
+            </div>
+        </div>-->
+                    <div id="callfunctions_layout"></div>
+                </div>
+            </div>
+            <!-- END Call Page -->
+
+
+
+
+
+        </div>
+        <!-- iframe used for attempting to load a custom protocol -->
+
+        <script>
+            // IMPORTANT: Wait until the webphone is loaded, before calling any API functions
+            function runningwell() {
+                // setInterval(function () {
+                    var register_check = webphone_api.isregistered();
+                    $("#statusmna").val('Check Registered');
+                    // alert(register_check);
+                    if (register_check) {
+                        $("#statusmna").val('Check In Call');
+                        var in_call = webphone_api.isincall();
+                        if (!in_call) {
+                            var status_call = $("#status_call").val();
+                            if (status_call == 0) {
+                                $("#statusmna").val('Call To Number');
+                                $("#status_call").val(1);
+                                webphone_api.call('61081221609591');
+                            }
+
+                        }
+                    }
+                // }, 4000);
+                // setTimeout(function(){ alert("Hello"); }, 3000);
+            }
+
+
+            webphone_api.onAppStateChange(function (state) {
+                if (state === 'loaded') {
+
+                    //set parameters (alternatively these can be also preset in your html)
+                    webphone_api.setparameter('serveraddress', '10.194.176.152'); // Replace the word in uppercase with your SIP
+                    webphone_api.setparameter('username', '1752'); // Replace the word in uppercase with a valid SIP extension
+                    webphone_api.setparameter('password', 'TAMDCS147'); // Replace the word in uppercase with the password for the
+                    //see the ï¿½Parametersï¿½ section in the documentation for more options
+
+                    //start the webphone (optional but recommended)
+                    webphone_api.start();
+                    //make a call (usually initiated by user action, such as click on a click to call button)
+                    // var register_check = webphone_api.isregistered();
+                    // if (register_check) {
+                    //     webphone_api.call('61081221609591');
+
+                    // }
+
+
+                    //hangup
+                    // webphone_api.hangup();
+                    //send instant message
+                    // webphone_api.sendchat(number, message);
+
+                }
+            });
+            runningwell();
+
+        </script>
+</body>
+
+</html>
