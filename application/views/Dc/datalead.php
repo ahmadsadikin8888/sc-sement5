@@ -94,20 +94,14 @@
                 <li>
                     <a href="<?php echo base_url(); ?>"><i class="icon-home mr-1"></i> Home</a>
                 </li>
-                <li>
-                    <a href="<?php echo base_url() . "Dc/Dc" ?>"><i class="icon-chart mr-1"></i> Dashboard</a>
-                </li>
                 <li class="active">
-                    <a href="<?php echo base_url() . "Dc/Dc/dalalead" ?>"><i class="icon-chart mr-1"></i> Data Lead</a>
-                </li>
-                <li>
-                    <a href="<?php echo base_url() . "Dc/Dc/engine" ?>"><i class="icon-chart mr-1"></i> Engine</a>
+                    <a href="<?php echo base_url() . "Dc/Dc/dalalead" ?>"><i class="icon-chart mr-1"></i> Dashboard</a>
                 </li>
                 <li>
                     <a href="<?php echo base_url() . "Dc/Dc/campaign" ?>"><i class="icon-chart mr-1"></i> Blast Management</a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url() . "Dc/Dc/report" ?>"><i class="icon-chart mr-1"></i> Report</a>
+                    <a href="<?php echo base_url() . "Dc/Dc/report" ?>"><i class="icon-chart mr-1"></i> Log</a>
                 </li>
             </ul>
 
@@ -124,8 +118,8 @@
                 <div class="col-12  align-self-center">
                     <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
                         <div class="w-sm-100 mr-auto">
-                            <h4 class="mb-0">Data Lead</h4>
-                            <i>*Last Update at <?php echo  date("d F Y h:i A", strtotime($last_update)); ?></i>
+                            <!-- <h4 class="mb-0">Dashboard</h4>
+                            <i>*Last Update at <?php echo  date("d F Y h:i A", strtotime($last_update)); ?></i> -->
                         </div>
 
 
@@ -133,128 +127,178 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col-3  mt-3">
-                            <div class="card">
-                                <div class="card-body text-success border-bottom border-success border-w-5">
-                                    <h2 class="text-center"><?php echo number_format($data_lead); ?></h2>
-                                    <h6 class="text-center">DATA LEAD</h6>
-                                </div>
-                            </div>
+                <div class="col-12  align-self-center">
+                    <div class="card">
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <h6 class="card-title">Dashboard Monitoring</h6>
                         </div>
-                        <div class="col-3  mt-3">
-                            <div class="card">
-                                <div class="card-body text-info border-bottom border-info border-w-5">
-                                    <h2 class="text-center"><?php echo number_format($data_wa); ?></h2>
-                                    <h6 class="text-center">WHATSAPP</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3  mt-3">
-                            <div class="card">
-                                <div class="card-body text-info border-bottom border-info border-w-5">
-                                    <h2 class="text-center"><?php echo number_format($data_email); ?></h2>
-                                    <h6 class="text-center">EMAIL</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3  mt-3">
-                            <div class="card">
-                                <div class="card-body text-info border-bottom border-info border-w-5">
-                                    <h2 class="text-center"><?php echo number_format($data_sms); ?></h2>
-                                    <h6 class="text-center">SMS</h6>
-                                </div>
-                            </div>
-                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="subheader">Whatsapp</div>
+                                            <div class="h4 mb-3 text-center"><?php echo number_format($channel['WA_INFOTAG']['order'] - $channel['WA_INFOTAG']['sisa']); ?>/<i style="font-size:10px;">Order <?php echo number_format($channel['WA_INFOTAG']['order']); ?></i></div>
+                                        </div>
 
-                    </div>
-                    <div class="row">
-                        <div class="col-3  mt-3">
-                            <div class="card">
-                                <div class="card-body text-danger border-bottom border-danger border-w-5">
-                                    <h2 class="text-center"><?php echo number_format($data_mapping); ?></h2>
-                                    <h6 class="text-center">PROSES MAPPING</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3  mt-3">
-                            <div class="card">
-                                <div class="card-body text-info border-bottom border-info border-w-5">
-                                    <h2 class="text-center"><?php echo number_format($data_ovr); ?></h2>
-                                    <h6 class="text-center">OVR</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3  mt-3">
-                            <div class="card">
-                                <div class="card-body text-info border-bottom border-info border-w-5">
-                                    <h2 class="text-center"><?php echo number_format($data_tvms); ?></h2>
-                                    <h6 class="text-center">TVMS</h6>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-3  mt-3">
-                            <div class="card">
-                                <div class="card-body text-info border-bottom border-info border-w-5">
-                                    <h2 class="text-center"><?php echo number_format($data_obc); ?></h2>
-                                    <h6 class="text-center">OBC</h6>
-                                </div>
-                            </div>
-                        </div>
+                                        <div class="progress progress-sm">
+                                            <?php
+                                            $percent_wa = (($channel['WA_INFOTAG']['order'] - $channel['WA_INFOTAG']['sisa']) / $channel['WA_INFOTAG']['order']) * 100;
+                                            ?>
+                                            <div class="progress-bar bg-blue" style="width: <?php echo $percent_wa; ?>%" role="progressbar" aria-valuenow="<?php echo $percent_wa; ?>" aria-valuemin="0" aria-valuemax="100">
+                                                <span class="visually-hidden"><?php echo number_format($percent_wa, 2); ?>% Complete</span>
+                                            </div>
+                                        </div>
+                                    </div>
 
+                                </div>
+
+                                <div class="col-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="subheader">Email</div>
+                                            <div class="h4 mb-3 text-center"><?php echo number_format($channel['DUNING_EMAIL']['order'] - $channel['DUNING_EMAIL']['sisa']); ?>/<i style="font-size:10px;">Order <?php echo number_format($channel['DUNING_EMAIL']['order']); ?></i></div>
+                                        </div>
+                                        <div class="progress progress-sm">
+                                            <?php
+                                            $percent_email = (($channel['DUNING_EMAIL']['order'] - $channel['DUNING_EMAIL']['sisa']) / $channel['DUNING_EMAIL']['order']) * 100;
+                                            ?>
+                                            <div class="progress-bar bg-blue" style="width: <?php echo $percent_email; ?>%" role="progressbar" aria-valuenow="<?php echo $percent_email; ?>" aria-valuemin="0" aria-valuemax="100">
+                                                <span class="visually-hidden"><?php echo number_format($percent_email, 2); ?>% Complete</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="subheader">SMS</div>
+                                            <div class="h4 mb-3 text-center"><?php echo number_format($channel['DUNING_SMS']['order'] - $channel['DUNING_SMS']['sisa']); ?>/<i style="font-size:10px;">Order <?php echo number_format($channel['DUNING_SMS']['order']); ?></i></div>
+                                        </div>
+                                        <div class="progress progress-sm">
+                                            <?php
+                                            $percent_sms = (($channel['DUNING_SMS']['order'] - $channel['DUNING_SMS']['sisa']) / $channel['DUNING_SMS']['order']) * 100;
+                                            ?>
+                                            <div class="progress-bar bg-blue" style="width: <?php echo $percent_sms; ?>%" role="progressbar" aria-valuenow="<?php echo $percent_sms; ?>" aria-valuemin="0" aria-valuemax="100">
+                                                <span class="visually-hidden"><?php echo number_format($percent_sms, 2); ?>% Complete</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="subheader">Total Order</div>
+                                            <div class="h4 mb-3 text-center"><?php echo number_format($progress_sms); ?></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="row  mt-3">
+                                <div class="col-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="subheader">OVR</div>
+                                            <div class="h4 mb-3 text-center"><?php echo number_format($channel['DUNING_OVR']['order'] - $channel['DUNING_OVR']['sisa']); ?>/<i style="font-size:10px;">Order <?php echo number_format($channel['DUNING_OVR']['order']); ?></i></div>
+                                        </div>
+                                        <div class="progress progress-sm">
+                                            <?php
+                                            $percent_ovr = (($channel['DUNING_OVR']['order'] - $channel['DUNING_OVR']['sisa']) / $channel['DUNING_OVR']['order']) * 100;
+                                            ?>
+                                            <div class="progress-bar bg-blue" style="width: <?php echo $percent_ovr; ?>%" role="progressbar" aria-valuenow="<?php echo $percent_ovr; ?>" aria-valuemin="0" aria-valuemax="100">
+                                                <span class="visually-hidden"><?php echo number_format($percent_ovr, 2); ?>% Complete</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="subheader">TVMS</div>
+                                            <div class="h4 mb-3 text-center"><?php echo number_format($channel['TVMS']['order'] - $channel['TVMS']['sisa']); ?>/<i style="font-size:10px;">Order <?php echo number_format($channel['TVMS']['order']); ?></i></div>
+                                        </div>
+                                        <div class="progress progress-sm">
+                                            <?php
+                                            $percent_tvms = (($channel['TVMS']['order'] - $channel['TVMS']['sisa']) / $channel['TVMS']['order']) * 100;
+                                            ?>
+                                            <div class="progress-bar bg-blue" style="width: <?php echo $percent_tvms; ?>%" role="progressbar" aria-valuenow="<?php echo $percent_tvms; ?>" aria-valuemin="0" aria-valuemax="100">
+                                                <span class="visually-hidden"><?php echo number_format($percent_tvms, 2); ?>% Complete</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="col-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="subheader">OBC</div>
+                                            <div class="h4 mb-3 text-center">-</div>
+                                        </div>
+                                        <!-- <div class="progress progress-sm">
+                                            <div class="progress-bar bg-blue" style="width: <?php echo $percent_sms; ?>%" role="progressbar" aria-valuenow="<?php echo $percent_sms; ?>" aria-valuemin="0" aria-valuemax="100">
+                                                <span class="visually-hidden"><?php echo number_format($percent_sms, 2); ?>% Complete</span>
+                                            </div>
+                                        </div> -->
+                                    </div>
+
+                                </div>
+                                <div class="col-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="subheader">Sisa Order</div>
+                                            <div class="h4 mb-3 text-center"><?php echo number_format($progress_sms); ?></div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="mt-3">
+                                <div class="col-12 col-lg-12  mt-3">
+                                    <table id="byagent" class="table dataTable table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <td nowrap style='text-align:center;'>Days</td>
+                                                <?php
+                                                $m_channel = array("WA_INFOTAG" => "Whatsapp", "DUNING_EMAIL" => "Email", "DUNING_SMS" => "SMS", "DUNING_OVR" => "OVR", "TVMS" => "TVMS", "OBC" => "OBC");
+                                                foreach ($m_channel as $ch => $vl) {
+                                                    echo "<td nowrap style='text-align:center;'>" . $vl . "</td>";
+                                                }
+                                                echo "<td nowrap style='text-align:center;'>Total</td>";
+                                                ?>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php
+                                            $n = 0;
+                                            $total_sumber = array();
+                                            $total_reg_all = 0;
+                                            for ($day = 1; $day <= 31; $day++) {
+
+                                                echo "<tr>";
+                                                echo "<td>" . $day . "</td>";
+                                                foreach ($m_channel as $ch => $vl) {
+                                                    echo "<td style='text-align:center;'>" . number_format($channel[$ch][$day]['order']) . "</td>";
+                                                }
+                                                echo "<td style='text-align:center;'><b>" . number_format($channel[$day]) . "</b></td>";
+                                                echo "</tr>";
+                                            }
+                                            ?>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <!-- END: Breadcrumbs-->
-            <div class="row">
-                <div class="col-12 col-lg-12  mt-3">
-                    <table id="byagent" class="table dataTable table-striped table-bordered">
-                        <thead>
-                            <tr>
-                                <td nowrap style='text-align:center;'>Days</td>
-                                <?php
-                                $channel = array("wa", "email", "sms", "ovr", "tvms", "obc");
-                                foreach ($channel as $ch) {
-                                    echo "<td nowrap style='text-align:center;'>" . strtoupper($ch) . "</td>";
-                                }
-                                echo "<td nowrap style='text-align:center;'>Sub Total</td>";
-                                ?>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $n = 0;
-                            $total_sumber = array();
-                            $total_reg_all = 0;
-                            for ($day = 1; $day <= 31; $day++) {
-
-                                echo "<tr>";
-                                echo "<td>" . $day . "</td>";
-                                foreach ($channel as $ch) {
-                                    // $total['']
-
-                                    echo "<td style='text-align:center;'>" . number_format($detail[$ch][$day]) . "</td>";
-                                }
-                                echo "<td style='text-align:center;'><b>" . number_format($days[$day]) . "</b></td>";
-                                echo "</tr>";
-                            }
-                            echo "<tr>";
-                            echo "<td style='text-align:right;'><b>Total</b></td>";
-                            foreach ($channel as $ch) {
-                                echo "<td style='text-align:center;'><b>" . number_format($$ch['total']) . "</b></td>";
-                            }
-                            echo "<td style='text-align:center;'><b>" . number_format($data_lead) . "</b></td>";
-
-                            echo "</tr>";
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
-
-
-            </div>
 
         </div>
 

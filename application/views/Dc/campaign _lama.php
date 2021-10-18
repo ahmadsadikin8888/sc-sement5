@@ -95,13 +95,19 @@
                     <a href="<?php echo base_url(); ?>"><i class="icon-home mr-1"></i> Home</a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url() . "Dc/Dc/dalalead" ?>"><i class="icon-chart mr-1"></i> Dashboard</a>
+                    <a href="<?php echo base_url() . "Dc/Dc" ?>"><i class="icon-chart mr-1"></i> Dashboard</a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url() . "Dc/Dc/dalalead" ?>"><i class="icon-chart mr-1"></i> Data Lead</a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url() . "Dc/Dc/engine" ?>"><i class="icon-chart mr-1"></i> Engine</a>
                 </li>
                 <li class="active">
                     <a href="<?php echo base_url() . "Dc/Dc/campaign" ?>"><i class="icon-chart mr-1"></i> Blast Management</a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url() . "Dc/Dc/report" ?>"><i class="icon-chart mr-1"></i> Log</a>
+                    <a href="<?php echo base_url() . "Dc/Dc/report" ?>"><i class="icon-chart mr-1"></i> Report</a>
                 </li>
 
 
@@ -120,8 +126,8 @@
                 <div class="col-12  align-self-center">
                     <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
                         <div class="w-sm-100 mr-auto">
-                            <!-- <h4 class="mb-0">Blast Management</h4> -->
-                            <!-- <i>*Last Update at <?php echo  date("d F Y h:i A", strtotime($last_update)); ?></i> -->
+                            <h4 class="mb-0">Blast Management</h4>
+                            <i>*Last Update at <?php echo  date("d F Y h:i A", strtotime($last_update)); ?></i>
                         </div>
                     </div>
                 </div>
@@ -146,7 +152,7 @@
                     </a> -->
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h6 class="card-title">Blast Management</h6>
+                            <h6 class="card-title">Blast Management Data List</h6>
                         </div>
                         <div class="card-body">
                             <table id="datalist" class="table dataTable table-striped table-bordered">
@@ -156,13 +162,11 @@
                                         <td>Campaign</td>
                                         <td>Methode</td>
                                         <td>Periode</td>
-                                        <td>Date</td>
-                                        <td>Last Update</td>
-                                        <td align="right">Data Order</td>
-                                        <td align="right">Proses</td>
-                                        <td align="right">Done</td>
-                                        <td align="center">Status</td>
-                                        <td align="center">Action</td>
+                                        <td>Data Order</td>
+                                        <td>Proses</td>
+                                        <td>Done</td>
+                                        <td>Status</td>
+                                        <td>Methode</td>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -171,28 +175,26 @@
                                     if (count($campaign) > 0) {
                                         foreach ($campaign as $cp) {
                                             $n++;
-                                            $total_jumlah_data = $total_jumlah_data + $cp->jumlah_data;
-                                            $total_sisa = $total_sisa + $cp->sisa;
                                     ?>
                                             <tr>
                                                 <td><?php echo $n ?></td>
                                                 <td><?php echo $cp->model ?></td>
                                                 <td><?php echo $cp->upd ?></td>
                                                 <td><?php echo $cp->periode ?></td>
-                                                <td><?php echo $cp->date_upload ?></td>
-                                                <td><?php echo $cp->lup ?></td>
-                                                <td align="right"><?php echo number_format($cp->jumlah_data) ?></td>
-                                                <td align="right"><?php echo number_format($cp->sisa) ?></td>
-                                                <td align="right"><?php echo number_format(($cp->jumlah_data - $cp->sisa)) ?></td>
+                                                <td><?php echo $cp->jumlah_data ?></td>
+                                                <td><?php echo $cp->sisa ?></td>
+                                                <td><?php echo ($cp->jumlah_data - $cp->sisa) ?></td>
                                                 <td align="center">
                                                     <?php
-                                                    $status = array(0 => "Ready", 1 => "Finished", 2 => "On Progress");
+                                                    $status = array(1 => "Finished", 2 => "On Progress");
                                                     echo $status[$cp->status];
                                                     ?>
+
+
                                                 </td>
-                                                <td>
+                                                <td align="center">
                                                     <?php
-                                                    if ($cp->status == 0) {
+                                                    if ($cp->status != 'Online' && $cp->status != 'Finished') {
                                                     ?>
                                                         <a href="<?php echo base_url('Dc/Dc/campaign_start/' . $cp->id . '/Online'); ?>">
                                                             <div class="btn btn-success btn-sm ml-2"><i class="icon-control-play"></i> Start</div>
@@ -200,35 +202,41 @@
                                                         <?php
                                                     } else {
                                                         switch ($cp->status) {
-                                                            case 2:
+                                                            case 'Online':
                                                         ?>
                                                                 <a href="<?php echo base_url('Dc/Dc/campaign_start/' . $cp->id . '/Paused'); ?>">
                                                                     <div class="btn btn-warning btn-sm ml-2"><i class="icon-control-pause"></i> Pause</div>
                                                                 </a>
                                                                 <a href="<?php echo base_url('Dc/Dc/campaign_start/' . $cp->id . '/Finished'); ?>">
-                                                                    <div class="btn btn-danger btn-sm ml-2"><i class="icon-close"></i> Stop</div>
+                                                                    <div class="btn btn-danger btn-sm ml-2"><i class="icon-control-stop"></i> Stop</div>
                                                                 </a>
                                                             <?php
                                                                 break;
-                                                            case 3:
+                                                            case 'Paused':
                                                             ?>
                                                                 <a href="<?php echo base_url('Dc/Dc/campaign_start/' . $cp->id . '/Online'); ?>">
                                                                     <div class="btn btn-success btn-sm ml-2"><i class="icon-control-play"></i> Start</div>
                                                                 </a>
                                                                 <a href="<?php echo base_url('Dc/Dc/campaign_start/' . $cp->id . '/Finished'); ?>">
-                                                                    <div class="btn btn-danger btn-sm ml-2"><i class="icon-close"></i> Stop</div>
-                                                                </a>
-                                                            <?php
-                                                                break;
-                                                            case 1:
-                                                            ?>
-                                                                <a href="<?php echo base_url('Dc/Dc/campaign_start/' . $cp->id . '/Online'); ?>">
-                                                                    <div class="btn btn-success btn-sm ml-2 btn-block"><i class="icon-chart"></i> Report</div>
+                                                                    <div class="btn btn-danger btn-sm ml-2"><i class="icon-control-stop"></i> Stop</div>
                                                                 </a>
                                                         <?php
                                                                 break;
                                                         }
                                                         ?>
+                                                    <?php
+                                                    }
+                                                    ?>
+
+                                                    <a href="<?php echo base_url('Dc/Dc/campaign_dashboard/' . $cp->id); ?>">
+                                                        <div class="btn btn-primary btn-sm ml-2"><i class="icon-pie-chart"></i>Dashboard</div>
+                                                    </a>
+                                                    <?php
+                                                    if ($cp->status != 'Online' && $cp->status != 'Finished') {
+                                                    ?>
+                                                        <a href="<?php echo base_url('Dc/Dc/campaign_update/' . $cp->id); ?>">
+                                                            <div class="btn btn-danger btn-sm ml-2"><i class="icon-note"></i>Update</div>
+                                                        </a>
                                                     <?php
                                                     }
                                                     ?>
@@ -241,17 +249,6 @@
                                     ?>
 
                                 </tbody>
-                                <tfoot>
-                                    <tr>
-                                        <td colspan='6' align="right">TOTAL</td>
-                                        <td align="right"><?php echo number_format($total_jumlah_data) ?></td>
-                                        <td align="right"><?php echo number_format($total_sisa) ?></td>
-                                        <td align="right"><?php echo number_format(($total_jumlah_data - $total_sisa)) ?></td>
-                                        <td align="center">
-                                        </td>
-                                        <td></td>
-                                    </tr>
-                                </tfoot>
                             </table>
                         </div>
                     </div>

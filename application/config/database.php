@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------
@@ -95,14 +95,34 @@ $db['default'] = array(
 	'save_queries' => TRUE
 );
 
-$db['dbprofile_verified'] = array(
+$db['ideas_135'] = array(
 	'dsn'	=> '',
-	'hostname' => '(DESCRIPTION = (ADDRESS = (PROTOCOL = TCP)(HOST = 10.6.5.141)(PORT = 1521))  (CONNECT_DATA = (SERVICE_NAME = I2DWHNAS) (SID = EE)))',
-	// 'hostname' => '10.6.5.141:1521/EE',
-	'username' => 'ODSPROFILE',
-	'password' => 'telkom#123',
-	'database' => 'ODSPROFILE',
-	'dbdriver' => 'oci8',
+	'hostname' => '10.60.175.135',
+	'username' => 'useridms',
+	'password' => 'idms#1234',
+	'database' => 'idmsdb',
+	'dbdriver' => 'mysqli',
+	'dbprefix' => '',
+	'pconnect' => FALSE,
+	'db_debug' => (ENVIRONMENT !== 'production'),
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'encrypt' => FALSE,
+	'compress' => FALSE,
+	'stricton' => FALSE,
+	'failover' => array(),
+	'save_queries' => TRUE
+);
+$db['ideas_133'] = array(
+	'dsn'	=> '',
+	'hostname' => '10.60.175.133',
+	'username' => 'userideas',
+	'password' => 'ideas#1234',
+	'database' => 'ideasdb',
+	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
 	'db_debug' => (ENVIRONMENT !== 'production'),

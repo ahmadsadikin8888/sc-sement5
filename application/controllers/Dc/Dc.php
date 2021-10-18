@@ -24,6 +24,7 @@ class Dc extends CI_Controller
     $this->load->model('Custom_model/Failover_model', 'failover');
     $this->load->model('Custom_model/Campaign_model', 'campaign');
     $this->load->model('Custom_model/Dim_customer_model', 'Dim_customer');
+    $this->load->model('Custom_model/Idmsdb_model', 'idmsdb');
   }
   public function index()
   {
@@ -40,15 +41,22 @@ class Dc extends CI_Controller
     $data['userdata'] = $this->Sys_user_table_model->get_row(array("id" => $logindata->id_user));
     $view = 'Dc/datalead';
     $filter = array();
-
-    $data['data_lead'] = $this->data_lead->live_query("SELECT count(*) as numna FROM dim_customer ")->row()->numna;
-    $data['data_wa'] = $this->data_lead->live_query("SELECT count(*) as numna FROM dim_customer WHERE  opsi_channel = 1")->row()->numna;
-    $data['data_sms'] = $this->data_lead->live_query("SELECT count(*) as numna FROM dim_customer WHERE opsi_channel = 2")->row()->numna;
-    $data['data_email'] = $this->data_lead->live_query("SELECT count(*) as numna FROM dim_customer WHERE opsi_channel = 3")->row()->numna;
-    $data['data_obc'] = $this->data_lead->live_query("SELECT count(*) as numna FROM dim_customer WHERE opsi_channel = 4")->row()->numna;
-    $data['data_ovr'] = $this->data_lead->live_query("SELECT count(*) as numna FROM dim_customer WHERE opsi_channel = 5")->row()->numna;
-    $data['data_tvms'] = $this->data_lead->live_query("SELECT count(*) as numna FROM dim_customer WHERE opsi_channel = 6")->row()->numna;
-    $data['data_mapping'] = $this->data_lead->live_query("SELECT count(*) as numna FROM dim_customer WHERE opsi_channel IS NULL")->row()->numna;
+    $month = date('m');
+    $year = date('Y');
+    $raw_data = $this->idmsdb->live_query("
+    SELECT model,status,DAY(date_upload) as hari,sum(jumlah_data) as order_data,sum(sisa) as sisa_data FROM m_schedule WHERE MONTH(date_upload)='$month' AND YEAR(date_upload)='$year' GROUP BY model,status,DAY(date_upload)
+    ")->result();
+    $data_channel = array();
+    if (count($raw_data) > 0) {
+      foreach ($raw_data as $rw) {
+        $data_channel[$rw->model][$rw->hari]['order'] = $rw->order_data + $data_channel[$rw->model][$rw->hari]['order'];
+        $data_channel[$rw->model][$rw->hari]['sisa'] = $rw->sisa_data + $data_channel[$rw->model][$rw->hari]['sisa'];
+        $data_channel[$rw->hari]= $rw->order_data + $data_channel[$rw->hari];
+        $data_channel[$rw->model]['order'] = $rw->order_data + $data_channel[$rw->model]['order'];
+        $data_channel[$rw->model]['sisa'] = $rw->sisa_data + $data_channel[$rw->model]['sisa'];
+      }
+    }
+    $data['channel'] = $data_channel;
     $this->load->view($view, $data);
   }
   function mapping_profiling()
@@ -106,8 +114,20 @@ class Dc extends CI_Controller
     $idlogin = $this->session->userdata('idlogin');
     $logindata = $this->log_login->get_by_id($idlogin);
     $data['userdata'] = $this->Sys_user_table_model->get_row(array("id" => $logindata->id_user));
-    $data['campaign'] = $this->campaign->get_results();
+    $now = DATE('Y-m-d');
+    $data['campaign'] = $this->idmsdb->live_query("SELECT * FROM m_schedule WHERE (status=2 OR status = 0) ")->result();
     $view = 'Dc/campaign';
+
+    $this->load->view($view, $data);
+  }
+  public function report()
+  {
+    $idlogin = $this->session->userdata('idlogin');
+    $logindata = $this->log_login->get_by_id($idlogin);
+    $data['userdata'] = $this->Sys_user_table_model->get_row(array("id" => $logindata->id_user));
+    $now = DATE('Y-m-d');
+    $data['campaign'] = $this->idmsdb->live_query("SELECT * FROM m_schedule WHERE status=1 AND date_upload = '$now' ")->result();
+    $view = 'Dc/report';
 
     $this->load->view($view, $data);
   }
@@ -288,7 +308,6 @@ class Dc extends CI_Controller
             "channel" => $ch->channel_value
           );
           $update_channel = $this->data_lead->edit($filter_channel, $update_channel);
-          
         }
       }
 
