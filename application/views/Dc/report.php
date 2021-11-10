@@ -146,7 +146,7 @@
                     </a> -->
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h6 class="card-title">Blast Report</h6>
+                            <h6 class="card-title">Realtime Monitoring</h6>
                         </div>
                         <div class="card-body">
                             <table id="datalist" class="table dataTable table-striped table-bordered">
@@ -168,6 +168,79 @@
                                 <tbody>
                                     <?php
                                     $n = 0;
+                                    if (count($campaign_running) > 0) {
+                                        foreach ($campaign_running as $cp) {
+                                            $n++;
+                                            $total_jumlah_data = $total_jumlah_data + $cp->jumlah_data;
+                                            $total_sisa = $total_sisa + $cp->sisa;
+                                    ?>
+                                            <tr>
+                                                <td><?php echo $n ?></td>
+                                                <td><?php echo $cp->model ?></td>
+                                                <td><?php echo $cp->upd ?></td>
+                                                <td><?php echo $cp->periode ?></td>
+                                                <td><?php echo $cp->date_upload ?></td>
+                                                <td><?php echo $cp->lup ?></td>
+                                                <td align="right"><?php echo number_format($cp->jumlah_data) ?></td>
+                                                <td align="right"><?php echo number_format($cp->sisa) ?></td>
+                                                <td align="right"><?php echo number_format(($cp->jumlah_data - $cp->sisa)) ?></td>
+                                                <td align="center">
+                                                    <?php
+                                                    $status = array(0 => "Ready", 1 => "Finished", 2 => "On Progress");
+                                                    echo $status[$cp->status];
+                                                    ?>
+                                                </td>
+                                                <td>
+                                                    <?php
+                                                    if ($cp->status == 0) {
+                                                    ?>
+                                                        <a href="<?php echo base_url('Dc/Dc/campaign_start/' . $cp->id . '/Online'); ?>">
+                                                            <div class="btn btn-success btn-sm ml-2"><i class="icon-control-play"></i> Start</div>
+                                                        </a>
+                                                        <?php
+                                                    } else {
+                                                        switch ($cp->status) {
+                                                            case 2:
+                                                        ?>
+                                                                <a href="<?php echo base_url('Dc/Dc/campaign_start/' . $cp->id . '/Paused'); ?>">
+                                                                    <div class="btn btn-warning btn-sm ml-2"><i class="icon-control-pause"></i> Pause</div>
+                                                                </a>
+                                                                <a href="<?php echo base_url('Dc/Dc/campaign_start/' . $cp->id . '/Finished'); ?>">
+                                                                    <div class="btn btn-danger btn-sm ml-2"><i class="icon-close"></i> Stop</div>
+                                                                </a>
+                                                            <?php
+                                                                break;
+                                                            case 3:
+                                                            ?>
+                                                                <a href="<?php echo base_url('Dc/Dc/campaign_start/' . $cp->id . '/Online'); ?>">
+                                                                    <div class="btn btn-success btn-sm ml-2"><i class="icon-control-play"></i> Start</div>
+                                                                </a>
+                                                                <a href="<?php echo base_url('Dc/Dc/campaign_start/' . $cp->id . '/Finished'); ?>">
+                                                                    <div class="btn btn-danger btn-sm ml-2"><i class="icon-close"></i> Stop</div>
+                                                                </a>
+                                                            <?php
+                                                                break;
+                                                            case 1:
+                                                            ?>
+                                                                <a href="<?php echo base_url('Dc/Dc/campaign_start/' . $cp->id . '/Online'); ?>">
+                                                                    <div class="btn btn-success btn-sm ml-2 btn-block"><i class="icon-chart"></i> Report</div>
+                                                                </a>
+                                                        <?php
+                                                                break;
+                                                        }
+                                                        ?>
+                                                    <?php
+                                                    }
+                                                    ?>
+
+                                                </td>
+                                            </tr>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
+                                    <?php
+                                   
                                     if (count($campaign) > 0) {
                                         foreach ($campaign as $cp) {
                                             $n++;

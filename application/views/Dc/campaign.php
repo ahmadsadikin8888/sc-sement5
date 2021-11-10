@@ -139,11 +139,16 @@
                     <?php
                     }
                     ?>
-                    <!-- <a href="<?php echo base_url('Dc/Dc/campaign_add'); ?>">
+                    <a href="<?php echo base_url('Dc/Dc/campaign_add'); ?>">
                         <div class="font-icon-list border mx-1 mb-2 btn btn-primary ">
-                            Add Blast Management
+                            Management Infotag
                         </div>
-                    </a> -->
+                    </a>
+                    <a href="<?php echo base_url('Dc/Dc/campaign_add'); ?>">
+                        <div class="font-icon-list border mx-1 mb-2 btn btn-primary ">
+                            Management Reminding
+                        </div>
+                    </a>
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h6 class="card-title">Blast Management</h6>

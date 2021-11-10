@@ -25,7 +25,7 @@ defined('BASEPATH') or exit('No direct script access allowed');
 */
 //$config['base_url'] = 'http://192.168.10.127/ybs-public/';
 //$config['base_url'] = 'http://192.168.43.60/ybs-public/';
-$config['base_url'] = 'http://localhost/git/sc-sement5/';
+$config['base_url'] = 'http://localhost/git_public/sc-sement5/';
 //$config['base_url'] = 'http://localhost/ybs_online/ybs/';
 
 /*

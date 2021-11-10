@@ -115,7 +115,7 @@ class Dc extends CI_Controller
     $logindata = $this->log_login->get_by_id($idlogin);
     $data['userdata'] = $this->Sys_user_table_model->get_row(array("id" => $logindata->id_user));
     $now = DATE('Y-m-d');
-    $data['campaign'] = $this->idmsdb->live_query("SELECT * FROM m_schedule WHERE (status=2 OR status = 0) ")->result();
+    
     $view = 'Dc/campaign';
 
     $this->load->view($view, $data);
@@ -126,6 +126,7 @@ class Dc extends CI_Controller
     $logindata = $this->log_login->get_by_id($idlogin);
     $data['userdata'] = $this->Sys_user_table_model->get_row(array("id" => $logindata->id_user));
     $now = DATE('Y-m-d');
+    $data['campaign_running'] = $this->idmsdb->live_query("SELECT * FROM m_schedule WHERE (status=2 OR status = 0) ")->result();
     $data['campaign'] = $this->idmsdb->live_query("SELECT * FROM m_schedule WHERE status=1 AND date_upload = '$now' ")->result();
     $view = 'Dc/report';
 

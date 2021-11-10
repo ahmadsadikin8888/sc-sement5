@@ -125,21 +125,6 @@
     <!-- START: Main Content-->
     <main>
         <div class="container-fluid site-width">
-            <!-- START: Breadcrumbs-->
-            <div class="row">
-                <div class="col-12  align-self-center">
-                    <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
-                        <div class="w-sm-100 mr-auto">
-                            <h4 class="mb-0">Blast Management</h4>
-                            <i>*Last Update at <?php echo  date("d F Y h:i A", strtotime($last_update)); ?></i>
-                        </div>
-
-
-                    </div>
-                </div>
-            </div>
-
-            <!-- END: Breadcrumbs-->
             <div class="row">
                 <div class="col-12  align-self-center">
                     <?php
@@ -154,7 +139,7 @@
 
                     <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
                         <div class="w-sm-100 mr-auto">
-                            <h4 class="mb-0">Form Blast Management</h4>
+                            <h4 class="mb-0">Management Info Tagihan</h4>
 
                         </div>
 
@@ -165,30 +150,41 @@
             <!-- END: Breadcrumbs-->
             <form id="form-a" action="#" method="post">
                 <div class="row">
-                    <div class="col-6">
-
+                    <div class="col-md">
                         <div class="form">
                             <div class="form-group">
-                                <label for="title">Title</label>
-                                <input type="text" name="title" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="date_online">Date Online</label>
-                                <input type="date" name="date_online" id="date_online" class="form-control">
-                            </div>
-                            <div class="form-group">
-                                <label for="lp">Status</label>
-                                <select class="form-control" name="status" id="status">
+                                <label for="temp_sms">Template SMS</label>
+                                <select class="form-control" name="sms_template" id="sms_template">
                                     <?php
-                                    $status = array("Draf", "Ready", "Online", "Finished", "paused");
-                                    foreach ($status as $lp) {
-                                        echo "<option value='" . $lp . "'>" . $lp . "</option>";
+                                    foreach ($sms_template as $lp) {
+                                        echo "<option value='" . $lp->id . "'>" . $lp->nama . "</option>";
                                     }
                                     ?>
                                 </select>
                             </div>
-                        </div>
+                            <div class="form-group">
+                                <label for="temp_sms">Template WA</label>
+                                <select class="form-control" name="wa_template" id="wa_template">
+                                    <?php
+                                    foreach ($wa_template as $lp) {
+                                        echo "<option value='" . $lp->MODEL . "'>" . $lp->MODEL . "</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="temp_sms">Template EBS</label>
+                                <select class="form-control" name="ebs_template" id="ebs_template">
+                                    <?php
+                                    foreach ($ebs_template as $lp) {
+                                        echo "<option value='" . $lp->id_template . "'>" . $lp->nama_template . "</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
 
+
+                        </div>
                     </div>
                     <div class="col-md">
                         <div class="form">
@@ -222,7 +218,7 @@
                                     ?>
                                 </select>
                             </div>
-                            
+
 
                         </div>
                     </div>
@@ -309,7 +305,7 @@
     <!-- END: Back to top-->
     <script type="text/javascript">
         $(document).ready(function() {
-            
+
         });
     </script>
 </body>
