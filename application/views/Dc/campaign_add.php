@@ -99,19 +99,13 @@
                     <a href="<?php echo base_url(); ?>"><i class="icon-home mr-1"></i> Home</a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url() . "Dc/Dc" ?>"><i class="icon-chart mr-1"></i> Dashboard</a>
-                </li>
-                <li>
-                    <a href="<?php echo base_url() . "Dc/Dc/dalalead" ?>"><i class="icon-chart mr-1"></i> Data Lead</a>
-                </li>
-                <li>
-                    <a href="<?php echo base_url() . "Dc/Dc/engine" ?>"><i class="icon-chart mr-1"></i> Engine</a>
+                    <a href="<?php echo base_url() . "Dc/Dc/dalalead" ?>"><i class="icon-chart mr-1"></i> Dashboard</a>
                 </li>
                 <li class="active">
                     <a href="<?php echo base_url() . "Dc/Dc/campaign" ?>"><i class="icon-chart mr-1"></i> Blast Management</a>
                 </li>
                 <li>
-                    <a href="<?php echo base_url() . "Dc/Dc/report" ?>"><i class="icon-chart mr-1"></i> Report</a>
+                    <a href="<?php echo base_url() . "Dc/Dc/report" ?>"><i class="icon-chart mr-1"></i> Log</a>
                 </li>
 
 
@@ -124,12 +118,14 @@
 
     <!-- START: Main Content-->
     <main>
+
         <div class="container-fluid site-width">
             <div class="row">
                 <div class="col-12  align-self-center">
                     <?php
                     if ($return) {
                     ?>
+                        <br>
                         <div class="alert alert-primary" role="alert">
                             <?php echo $return; ?>
                         </div>
@@ -157,7 +153,7 @@
                                 <select class="form-control" name="sms_template" id="sms_template">
                                     <?php
                                     foreach ($sms_template as $lp) {
-                                        echo "<option value='" . $lp->id . "'>" . $lp->nama . "</option>";
+                                        echo "<option value='" . $lp->nama . "'>" . $lp->nama . "</option>";
                                     }
                                     ?>
                                 </select>
@@ -177,7 +173,7 @@
                                 <select class="form-control" name="ebs_template" id="ebs_template">
                                     <?php
                                     foreach ($ebs_template as $lp) {
-                                        echo "<option value='" . $lp->id_template . "'>" . $lp->nama_template . "</option>";
+                                        echo "<option value='" . $lp->nama_template . "'>" . $lp->nama_template . "</option>";
                                     }
                                     ?>
                                 </select>
@@ -189,31 +185,21 @@
                     <div class="col-md">
                         <div class="form">
                             <div class="form-group">
-                                <label for="temp_sms">Template SMS</label>
-                                <select class="form-control" name="sms_template" id="sms_template">
+                                <label for="temp_sms">Template OVR</label>
+                                <select class="form-control" name="ovr_template" id="ovr_template">
                                     <?php
-                                    foreach ($sms_template as $lp) {
-                                        echo "<option value='" . $lp->id . "'>" . $lp->nama . "</option>";
+                                    foreach ($ovr_template as $lp) {
+                                        echo "<option value='" . $lp->id_skema . "'>" . $lp->id_skema . "</option>";
                                     }
                                     ?>
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="temp_sms">Template WA</label>
-                                <select class="form-control" name="wa_template" id="wa_template">
+                                <label for="temp_sms">Template TVMS</label>
+                                <select class="form-control" name="tvms_template" id="tvms_template">
                                     <?php
-                                    foreach ($wa_template as $lp) {
-                                        echo "<option value='" . $lp->MODEL . "'>" . $lp->MODEL . "</option>";
-                                    }
-                                    ?>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="temp_sms">Template EBS</label>
-                                <select class="form-control" name="ebs_template" id="ebs_template">
-                                    <?php
-                                    foreach ($ebs_template as $lp) {
-                                        echo "<option value='" . $lp->id_template . "'>" . $lp->nama_template . "</option>";
+                                    foreach ($tvms_template as $lp) {
+                                        echo "<option value='" . $lp->nama . "'>" . $lp->nama . "</option>";
                                     }
                                     ?>
                                 </select>

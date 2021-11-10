@@ -30,7 +30,7 @@
     ?>
 
     <meta charset="UTF-8">
-    <title>Smartcollection - Campaign</title>
+    <title>Digital Channel - Engine</title>
     <link rel="icon" type="image/png" href="<?php echo base_url('assets/images/logo.png') ?>">
     <meta name="viewport" content="width=device-width,initial-scale=1">
 
@@ -61,6 +61,10 @@
     <!-- END: Page CSS-->
     <script src="<?php echo base_url() ?>assets/js/highcharts.js"></script>
     <script src="<?php echo base_url() ?>assets/js/bundle.js"></script>
+
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/new_theme/tambahan/editor_text/src/richtext.min.css">
+    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/new_theme/tambahan/editor_text/font-awesome.min.css">
+
     <!-- END: Custom CSS-->
 </head>
 <!-- END Head-->
@@ -70,9 +74,9 @@
 <body id="main-container" class="default horizontal-menu">
 
     <!-- START: Pre Loader-->
-    <!-- <div class="se-pre-con">
+    <div class="se-pre-con">
         <div class="loader"></div>
-    </div> -->
+    </div>
     <!-- END: Pre Loader-->
 
     <!-- START: Header-->
@@ -91,7 +95,7 @@
 
             <!-- START: Menu-->
             <ul id="side-menu" class="sidebar-menu">
-                <li>
+            <li>
                     <a href="<?php echo base_url(); ?>"><i class="icon-home mr-1"></i> Home</a>
                 </li>
                 <li>
@@ -114,86 +118,103 @@
 
     <!-- START: Main Content-->
     <main>
+    
         <div class="container-fluid site-width">
-            <!-- START: Breadcrumbs-->
-            <div class="row">
-                <div class="col-12  align-self-center">
-                    <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
-                        <div class="w-sm-100 mr-auto">
-                            <!-- <h4 class="mb-0">Blast Management</h4> -->
-                            <!-- <i>*Last Update at <?php echo  date("d F Y h:i A", strtotime($last_update)); ?></i> -->
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- END: Breadcrumbs-->
             <div class="row">
                 <div class="col-12  align-self-center">
                     <?php
-                    if (isset($_GET['success_create_lead'])) {
+                    if ($return) {
                     ?>
+                    <br>
                         <div class="alert alert-primary" role="alert">
-                            <?php echo $_GET['info']; ?>
+                            <?php echo $return; ?>
                         </div>
                     <?php
                     }
                     ?>
-                    <a href="<?php echo base_url('Dc/Dc/campaign_add'); ?>">
-                        <div class="font-icon-list border mx-1 mb-2 btn btn-primary ">
-                            Management Infotag
+
+                    <div class="sub-header mt-3 py-3 align-self-center d-sm-flex w-100 rounded">
+                        <div class="w-sm-100 mr-auto">
+                            <h4 class="mb-0">Management Info Tagihan</h4>
+
                         </div>
-                    </a>
-                    <a href="<?php echo base_url('Dc/Dc/campaign_reminding_add'); ?>">
-                        <div class="font-icon-list border mx-1 mb-2 btn btn-primary ">
-                            Management Reminding
-                        </div>
-                    </a>
-                    <div class="card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h6 class="card-title">Blast Management</h6>
-                        </div>
-                        <div class="card-body">
-                            <table id="datalist" class="table dataTable table-striped table-bordered">
-                                <thead>
-                                    <tr>
-                                        <td>No</td>
-                                        <td>Campaign</td>
-                                        <td>SMS</td>
-                                        <td>WA</td>
-                                        <td>EMAIL</td>
-                                        <td>TVMS</td>
-                                        <td>OVR</td>
-                                        <td>Last Update</td>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Infotag</td>
-                                        <td><?php echo $infotag->sms ?></td>
-                                        <td><?php echo $infotag->wa ?></td>
-                                        <td><?php echo $infotag->email ?></td>
-                                        <td><?php echo $infotag->tvms ?></td>
-                                        <td><?php echo $infotag->ovr ?></td>
-                                        <td><?php echo $infotag->lup ?></td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Reminding</td>
-                                        <td><?php echo $reminding->sms ?></td>
-                                        <td><?php echo $reminding->wa ?></td>
-                                        <td><?php echo $reminding->email ?></td>
-                                        <td><?php echo $reminding->tvms ?></td>
-                                        <td><?php echo $reminding->ovr ?></td>
-                                        <td><?php echo $reminding->lup ?></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+
+
                     </div>
                 </div>
             </div>
+            <!-- END: Breadcrumbs-->
+            <form id="form-a" action="#" method="post">
+                <div class="row">
+                    <div class="col-md">
+                        <div class="form">
+                            <div class="form-group">
+                                <label for="temp_sms">Template SMS</label>
+                                <select class="form-control" name="sms_template" id="sms_template">
+                                    <?php
+                                    foreach ($sms_template as $lp) {
+                                        echo "<option value='" . $lp->nama . "'>" . $lp->nama . "</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="temp_sms">Template WA</label>
+                                <select class="form-control" name="wa_template" id="wa_template">
+                                    <?php
+                                    foreach ($wa_template as $lp) {
+                                        echo "<option value='" . $lp->MODEL . "'>" . $lp->MODEL . "</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="temp_sms">Template EBS</label>
+                                <select class="form-control" name="ebs_template" id="ebs_template">
+                                    <?php
+                                    foreach ($ebs_template as $lp) {
+                                        echo "<option value='" . $lp->nama_template . "'>" . $lp->nama_template . "</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+
+
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="form">
+                            <div class="form-group">
+                                <label for="temp_sms">Template OVR</label>
+                                <select class="form-control" name="ovr_template" id="ovr_template">
+                                    <?php
+                                    foreach ($ovr_template as $lp) {
+                                        echo "<option value='" . $lp->id_skema . "'>" . $lp->id_skema . "</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="temp_sms">Template TVMS</label>
+                                <select class="form-control" name="tvms_template" id="tvms_template">
+                                    <?php
+                                    foreach ($tvms_template as $lp) {
+                                        echo "<option value='" . $lp->nama . "'>" . $lp->nama . "</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                </div>
+
+                <button class="btn btn-primary" type="submit">Submit</button>
+                <!-- <div class="btn btn-success ml-3">Start</div>
+                <div class="btn btn-danger ml-3">Stop</div>
+                <div class="btn btn-info pull-right">Test Send</div> -->
 
         </div>
 
@@ -263,11 +284,16 @@
     <!-- END: Page Vendor JS-->
     <script src="<?php echo base_url(); ?>assets/new_theme/dist/vendors/chartjs/Chart.min.js"></script>
     <script src="<?php echo base_url(); ?>assets/new_theme/dist/js/chartjs-plugin-datalabels.min.js"></script>
+    <script type="text/javascript" src="<?php echo base_url(); ?>assets/new_theme/tambahan/editor_text/src/jquery.richtext.js"></script>
 
     <!---- END page datatable--->
 
     <!-- END: Back to top-->
+    <script type="text/javascript">
+        $(document).ready(function() {
 
+        });
+    </script>
 </body>
 <!-- END: Body-->
 

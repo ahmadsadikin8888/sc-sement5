@@ -25,6 +25,8 @@ class Dc extends CI_Controller
     $this->load->model('Custom_model/Campaign_model', 'campaign');
     $this->load->model('Custom_model/Dim_customer_model', 'Dim_customer');
     $this->load->model('Custom_model/Idmsdb_model', 'idmsdb');
+    $this->load->model('Custom_model/Setting_infotag_model', 'setting_infotag');
+    $this->load->model('Custom_model/Setting_reminding_model', 'setting_reminding');
   }
   public function index()
   {
@@ -51,7 +53,7 @@ class Dc extends CI_Controller
       foreach ($raw_data as $rw) {
         $data_channel[$rw->model][$rw->hari]['order'] = $rw->order_data + $data_channel[$rw->model][$rw->hari]['order'];
         $data_channel[$rw->model][$rw->hari]['sisa'] = $rw->sisa_data + $data_channel[$rw->model][$rw->hari]['sisa'];
-        $data_channel[$rw->hari]= $rw->order_data + $data_channel[$rw->hari];
+        $data_channel[$rw->hari] = $rw->order_data + $data_channel[$rw->hari];
         $data_channel[$rw->model]['order'] = $rw->order_data + $data_channel[$rw->model]['order'];
         $data_channel[$rw->model]['sisa'] = $rw->sisa_data + $data_channel[$rw->model]['sisa'];
       }
@@ -115,7 +117,8 @@ class Dc extends CI_Controller
     $logindata = $this->log_login->get_by_id($idlogin);
     $data['userdata'] = $this->Sys_user_table_model->get_row(array("id" => $logindata->id_user));
     $now = DATE('Y-m-d');
-    
+    $data['infotag']=$this->data_lead->live_query("SELECT * FROM setting_infotag ORDER BY id DESC LIMIT 1")->row();
+    $data['reminding']=$this->data_lead->live_query("SELECT * FROM setting_reminding ORDER BY id DESC  LIMIT 1")->row();
     $view = 'Dc/campaign';
 
     $this->load->view($view, $data);
@@ -140,21 +143,54 @@ class Dc extends CI_Controller
     $data['ebs_template'] = $this->data_lead->live_query("select * FROM ebs_template WHERE status='Aktif'")->result();
     $data['sms_template'] = $this->data_lead->live_query("select * FROM sms_template WHERE status='Aktif'")->result();
     $data['wa_template'] = $this->data_lead->live_query("select * FROM wa_template WHERE status=3")->result();
+    $data['ovr_template'] = $this->data_lead->live_query("select * FROM ovr_master GROUP BY id_skema")->result();
+    $data['tvms_template'] = $this->data_lead->live_query("select * FROM tvms_template")->result();
 
     $view = 'Dc/campaign_add';
     $data['return'] = false;
-    if (isset($_POST['title'])) {
+    if (isset($_POST['sms_template'])) {
+      
       $data_insert = array(
-        "status" => $_POST['status'],
-        "title" => $_POST['title'],
-        "date_online" => $_POST['date_online'],
-        "sms_template" => $_POST['sms_template'],
-        "wa_template" => $_POST['wa_template'],
-        "ebs_template" => $_POST['ebs_template']
+        "email" => $_POST['ebs_template'],
+        "sms" => $_POST['sms_template'],
+        "wa" => $_POST['wa_template'],
+        "tvms" => $_POST['tvms_template'],
+        "ovr" => $_POST['ovr_template'],
+        "lup" => date('Y-m-d H:i:s')
       );
-      $input = $this->campaign->add($data_insert);
+      $input = $this->setting_infotag->add($data_insert);
       if ($input) {
-        $data['return'] = "Blast Management Berhasil di Tambahkan.";
+        $data['return'] = "Blast Management Infotag Berhasil di Tambahkan.";
+      }
+    }
+
+    $this->load->view($view, $data);
+  }
+  public function campaign_reminding_add()
+  {
+    $idlogin = $this->session->userdata('idlogin');
+    $logindata = $this->log_login->get_by_id($idlogin);
+    $data['userdata'] = $this->Sys_user_table_model->get_row(array("id" => $logindata->id_user));
+    $data['ebs_template'] = $this->data_lead->live_query("select * FROM ebs_template WHERE status='Aktif'")->result();
+    $data['sms_template'] = $this->data_lead->live_query("select * FROM sms_template WHERE status='Aktif'")->result();
+    $data['wa_template'] = $this->data_lead->live_query("select * FROM wa_template WHERE status=3")->result();
+    $data['ovr_template'] = $this->data_lead->live_query("select * FROM ovr_master GROUP BY id_skema")->result();
+    $data['tvms_template'] = $this->data_lead->live_query("select * FROM tvms_template")->result();
+
+    $view = 'Dc/campaign_reminding_add';
+    $data['return'] = false;
+    if (isset($_POST['ebs_template'])) {
+      $data_insert = array(
+        "email" => $_POST['ebs_template'],
+        "sms" => $_POST['sms_template'],
+        "wa" => $_POST['wa_template'],
+        "tvms" => $_POST['tvms_template'],
+        "ovr" => $_POST['ovr_template'],
+        "lup" => date('Y-m-d H:i:s')
+      );
+      $input = $this->setting_reminding->add($data_insert);
+      if ($input) {
+        $data['return'] = "Blast Management Reminding Berhasil di Tambahkan.";
       }
     }
 
