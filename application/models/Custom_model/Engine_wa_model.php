@@ -13,6 +13,7 @@ class Engine_wa_model extends CI_Model
     {
         parent::__construct();
         $this->tbl = "DUNNING_WA";
+        $this->db = $this->load->database('oracle_pranpc',TRUE);
     }
 
     function get_results($where = array(), $fields = array('*'), $limit = array(), $order_by = array())

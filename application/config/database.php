@@ -137,3 +137,25 @@ $db['ideas_133'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
+$db['oracle_pranpc'] = array(
+	'dsn'	=> '',
+	'hostname' => '(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = 10.62.175.9)(PORT = 1521))(CONNECT_DATA =(SERVER = SHARED)(SERVICE_NAME = pranpc)))',
+	// 'hostname' => '10.6.5.141:1521/EE',
+	'username' => 'ideas',
+	'password' => 'ideas2015',
+	'database' => 'IDEAS',
+	'dbdriver' => 'oci8',
+	'dbprefix' => '',
+	'pconnect' => FALSE,
+	'db_debug' => (ENVIRONMENT !== 'production'),
+	'cache_on' => FALSE,
+	'cachedir' => '',
+	'char_set' => 'utf8',
+	'dbcollat' => 'utf8_general_ci',
+	'swap_pre' => '',
+	'encrypt' => FALSE,
+	'compress' => FALSE,
+	'stricton' => FALSE,
+	'failover' => array(),
+	'save_queries' => TRUE
+);

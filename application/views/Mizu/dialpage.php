@@ -226,7 +226,7 @@
                                         </form>
                                     </div>
 
-                                    <!-- <div class="col-12 mizu_custom_control">
+                                    <div class="col-12 mizu_custom_control">
                                         <div id="divMizuvoipControl">
                                             <div id="divMizuvoipControlBody" style="background-color: rgba(0, 0, 0, 0);">
                                                 <div class="row py-1">
@@ -240,7 +240,7 @@
                                                 <div id="video_container" style="display: none;"></div>
                                             </div>
                                         </div>
-                                    </div> -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -623,7 +623,7 @@
             // if (result.limit == 1) {
 
             //intercept submit -> ajax, submit data tiket
-            document.getElementById("button_untuk_submit_"+id).addEventListener("click", function(e) {
+            document.getElementById("button_untuk_submit_" + id).addEventListener("click", function(e) {
 
                 // updateStatus(4, assignedData[pointIndex].unique_key, assignedData[pointIndex].categorie_id)
                 submitData();

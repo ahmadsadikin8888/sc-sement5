@@ -13,10 +13,15 @@ class Smartcollection extends CI_Controller
         $this->load->model('Custom_model/M_schedule_model', 'm_schedule');
         $this->load->model('Custom_model/Data_lead_model', 'data_lead');
         $this->load->model('Custom_model/Engine_sms_model', 'engine_sms');
-        $this->load->model('Custom_model/Engine_wa_model', 'engine_wa');
+        // $this->load->model('Custom_model/Engine_wa_model', 'engine_wa');
         $this->load->model('Custom_model/Engine_tvms_model', 'engine_tvms');
         $this->load->model('Custom_model/Engine_ovr_model', 'engine_ovr');
         $this->load->model('Custom_model/Engine_email_model', 'engine_email');
+    }
+    public function index()
+    {
+        echo "cek koneksi";
+        // echo $this->engine_email->get_count();
     }
     public function blast()
     {
@@ -75,6 +80,15 @@ class Smartcollection extends CI_Controller
                                 break;
                             case "wa":
                                 $this->wa_blast($data_blast, $sid, $period_sch, $ch, $setting);
+                                break;
+                            case "ovr":
+                                $this->ovr_blast($data_blast, $sid, $period_sch, $ch, $setting);
+                                break;
+                            case "tvms":
+                                $this->tvms_blast($data_blast, $sid, $period_sch, $ch, $setting);
+                                break;
+                            case "email":
+                                $this->email_blast($data_blast, $sid, $period_sch, $ch, $setting);
                                 break;
                         }
                     }
@@ -146,7 +160,7 @@ class Smartcollection extends CI_Controller
                 'LINK_BAYAR' => $LINK_BAYAR,
                 'LINK' => $LINK,
             );
-            $this->engine_sms->add($data_insert);
+            $this->engine_wa->add($data_insert);
         }
     }
     public function tvms_blast($data_blast, $sid, $period_sch, $ch, $setting)

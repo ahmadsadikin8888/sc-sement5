@@ -13,6 +13,7 @@ class Engine_sms_model extends CI_Model
     {
         parent::__construct();
         $this->tbl = "dunning_sms";
+        $this->db = $this->load->database('ideas_135',TRUE);
     }
 
     function get_results($where = array(), $fields = array('*'), $limit = array(), $order_by = array())
