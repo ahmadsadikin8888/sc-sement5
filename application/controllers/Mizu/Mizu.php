@@ -20,12 +20,12 @@ class Mizu extends CI_Controller
     $this->load->model('sys/Sys_user_log_model', 'log_login');
     $this->load->model('Custom_model/Sys_user_table_model', 'Sys_user_table_model');
     // $this->load->model('Custom_model/Dapros_infomedia_model', 'distribution');
-    $this->load->model('Custom_model/Data_lead_model', 'data_lead');
-    $this->load->model('Custom_model/Failover_model', 'failover');
+    // $this->load->model('Custom_model/Data_lead_model', 'data_lead');
+    // $this->load->model('Custom_model/Failover_model', 'failover');
     $this->load->model('Custom_model/Campaign_model', 'campaign');
     $this->load->model('Custom_model/Dapros_model', 'dapros');
-    $this->load->model('Custom_model/Trans_model', 'trans');
-    $this->load->model('Custom_model/Trans_detail_model', 'trans_detail');
+    // $this->load->model('Custom_model/Trans_model', 'trans');
+    // $this->load->model('Custom_model/Trans_detail_model', 'trans_detail');
   }
   public function index()
   {

@@ -117,8 +117,8 @@ class Dc extends CI_Controller
     $logindata = $this->log_login->get_by_id($idlogin);
     $data['userdata'] = $this->Sys_user_table_model->get_row(array("id" => $logindata->id_user));
     $now = DATE('Y-m-d');
-    $data['infotag']=$this->data_lead->live_query("SELECT * FROM setting_infotag ORDER BY id DESC LIMIT 1")->row();
-    $data['reminding']=$this->data_lead->live_query("SELECT * FROM setting_reminding ORDER BY id DESC  LIMIT 1")->row();
+    $data['infotag'] = $this->data_lead->live_query("SELECT * FROM setting_infotag ORDER BY id DESC LIMIT 1")->row();
+    $data['reminding'] = $this->data_lead->live_query("SELECT * FROM setting_reminding ORDER BY id DESC  LIMIT 1")->row();
     $view = 'Dc/campaign';
 
     $this->load->view($view, $data);
@@ -149,7 +149,7 @@ class Dc extends CI_Controller
     $view = 'Dc/campaign_add';
     $data['return'] = false;
     if (isset($_POST['sms_template'])) {
-      
+
       $data_insert = array(
         "email" => $_POST['ebs_template'],
         "sms" => $_POST['sms_template'],
