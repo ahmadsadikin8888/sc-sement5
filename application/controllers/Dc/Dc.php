@@ -24,7 +24,7 @@ class Dc extends CI_Controller
     $this->load->model('Custom_model/Failover_model', 'failover');
     $this->load->model('Custom_model/Campaign_model', 'campaign');
     $this->load->model('Custom_model/Dim_customer_model', 'Dim_customer');
-    $this->load->model('Custom_model/Idmsdb_model', 'idmsdb');
+    // $this->load->model('Custom_model/Idmsdb_model', 'idmsdb');
     $this->load->model('Custom_model/Setting_infotag_model', 'setting_infotag');
     $this->load->model('Custom_model/Setting_reminding_model', 'setting_reminding');
   }
@@ -34,6 +34,31 @@ class Dc extends CI_Controller
     $logindata = $this->log_login->get_by_id($idlogin);
     $data['userdata'] = $this->Sys_user_table_model->get_row(array("id" => $logindata->id_user));
     $view = 'Dc/dashboard';
+    $this->load->view($view, $data);
+  }
+  function datalead_dapros()
+  {
+    $idlogin = $this->session->userdata('idlogin');
+    $logindata = $this->log_login->get_by_id($idlogin);
+    $data['userdata'] = $this->Sys_user_table_model->get_row(array("id" => $logindata->id_user));
+    $view = 'Dc/datalead_dapros';
+    $filter = array();
+    $month = date('m');
+    $year = date('Y');
+    $raw_data = $this->data_lead->live_query("
+    SELECT channel,DAY(blast_date) as hari,count(id) as order_data FROM data_lead WHERE MONTH(blast_date)='$month' AND YEAR(blast_date)='$year' GROUP BY channel,DAY(blast_date)
+    ")->result();
+    $data_channel = array();
+    if (count($raw_data) > 0) {
+      foreach ($raw_data as $rw) {
+        $data_channel[$rw->channel][$rw->hari]['order'] = $rw->order_data + $data_channel[$rw->channel][$rw->hari]['order'];
+        $data_channel[$rw->channel][$rw->hari]['sisa'] = $rw->order_data + $data_channel[$rw->channel][$rw->hari]['sisa'];
+        $data_channel[$rw->hari] = $rw->order_data + $data_channel[$rw->hari];
+        $data_channel[$rw->channel]['order'] = $rw->order_data + $data_channel[$rw->channel]['order'];
+        $data_channel[$rw->channel]['sisa'] = $rw->order_data + $data_channel[$rw->channel]['sisa'];
+      }
+    }
+    $data['channel'] = $data_channel;
     $this->load->view($view, $data);
   }
   function dalalead()
@@ -132,6 +157,17 @@ class Dc extends CI_Controller
     $data['campaign_running'] = $this->idmsdb->live_query("SELECT * FROM m_schedule WHERE (status=2 OR status = 0) ")->result();
     $data['campaign'] = $this->idmsdb->live_query("SELECT * FROM m_schedule WHERE status=1 AND date_upload = '$now' ")->result();
     $view = 'Dc/report';
+
+    $this->load->view($view, $data);
+  }
+  public function report_raw()
+  {
+    $idlogin = $this->session->userdata('idlogin');
+    $logindata = $this->log_login->get_by_id($idlogin);
+    $data['userdata'] = $this->Sys_user_table_model->get_row(array("id" => $logindata->id_user));
+    $now = DATE('Y-m-d');
+    $data['data_lead'] = $this->data_lead->live_query("SELECT * FROM data_lead  ")->result();
+    $view = 'Dc/report_raw';
 
     $this->load->view($view, $data);
   }

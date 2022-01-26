@@ -129,14 +129,27 @@
                                                 </a>
                                             </div>
                                             <div class="col-sm-6">
-                                                <a href="<?php echo base_url() . "Report/Report/report_call"; ?>" class="card p-3 btn btn-success btn-card">
+                                                <a href="<?php echo base_url() . "Dashboard/SmartCollection/wallboard_obc"; ?>" class="card p-3 btn btn-danger btn-card">
                                                     <div class="d-flex align-items-center">
-                                                        <span class="stamp stamp-md bg-green mr-3">
+                                                        <span class="stamp stamp-md bg-red mr-3">
                                                             <i class="fe fe-bar-chart"></i>
                                                         </span>
                                                         <div class="text-left">
-                                                            <p class="m-0 text-green">REPORT Blast</p>
-                                                            <small class="text-muted">Report By Date</small>
+                                                            <p class="m-0 text-red">Wallboard OBC</p>
+                                                            <small class="text-muted">Dashboard Obc</small>
+                                                        </div>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <a href="<?php echo base_url() . "Dashboard/Kpi"; ?>" class="card p-3 btn btn-danger btn-card">
+                                                    <div class="d-flex align-items-center">
+                                                        <span class="stamp stamp-md bg-red mr-3">
+                                                            <i class="fe fe-bar-chart"></i>
+                                                        </span>
+                                                        <div class="text-left">
+                                                            <p class="m-0 text-red">Wallboard KPI</p>
+                                                            <small class="text-muted">Dashboard Kpi</small>
                                                         </div>
                                                     </div>
                                                 </a>
@@ -148,17 +161,18 @@
                                                             <i class="fe fe-bar-chart"></i>
                                                         </span>
                                                         <div class="text-left">
-                                                            <p class="m-0 text-green">REPORT Channel</p>
+                                                            <p class="m-0 text-green">REPORT</p>
                                                             <small class="text-muted">Report By Date</small>
                                                         </div>
                                                     </div>
                                                 </a>
                                             </div>
+
                                         <?php
                                         } else {
                                         ?>
                                             <div class="col-sm-12">
-                                                <a href="<?php echo base_url() . "Outbound/Outbound/"; ?>" class="card p-3 btn btn-success btn-card">
+                                                <a href="<?php echo base_url() . "Mizu/Mizu"; ?>" class="card p-3 btn btn-success btn-card">
                                                     <div class="d-flex align-items-center">
                                                         <span class="stamp stamp-md bg-success mr-3">
                                                             <i class="fe fe-bar"></i>
@@ -179,7 +193,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </td>

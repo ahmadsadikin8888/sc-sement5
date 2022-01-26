@@ -33,11 +33,26 @@
 						</div>
 						<div class='col-md-6 col-xl-6'>
 							<div class='form-group'>
+								<label class='form-label'>Campaign</label>
+								<select class="form-control" name="campaign">
+									<option value="">All Channel</option>
+									<option>Infotag</option>
+									<option>Reminding</option>
+									<option>Courtesy</option>
+									<option>Undunning</option>
+								</select>
+							</div>
+						</div>
+						<div class='col-md-6 col-xl-6'>
+							<div class='form-group'>
 								<label class='form-label'>Channel</label>
 								<select class="form-control" name="channel">
 									<option value="">All Channel</option>
 									<option value="EMAIL">EMAIL</option>
 									<option value="WA">WA</option>
+									<option value="SMS">SMS</option>
+									<option value="TVMS">TVMS</option>
+									<option value="OVR">OVR</option>
 									<option value="SMS">SMS</option>
 									<option VALUE='OBC'>OBC</option>
 								</select>
@@ -83,7 +98,7 @@ if (isset($_GET['start']) && isset($_GET['end'])) {
 		<div class="card">
 			<div class="card-status bg-orange"></div>
 			<div class="card-header">
-				<h3 class="card-title">Report Call Periode <?php echo $_GET['start'] . " sd " . $_GET['end'] ?>
+				<h3 class="card-title">Report
 
 				</h3>
 				<div class="card-options">
@@ -110,7 +125,7 @@ if (isset($_GET['start']) && isset($_GET['end'])) {
 								if (count($call_history) > 0) {
 									foreach ($call_history as $r) {
 										$n++;
-										
+
 								?>
 										<tr>
 											<td nowrap><?php echo $n; ?></td>

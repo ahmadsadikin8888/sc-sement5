@@ -94,14 +94,21 @@
                 <li>
                     <a href="<?php echo base_url(); ?>"><i class="icon-home mr-1"></i> Home</a>
                 </li>
+
+                <li>
+                    <a href="<?php echo base_url() . "Dc/Dc/datalead_dapros" ?>"><i class="icon-chart mr-1"></i> Analitic Data Customer</a>
+                </li>
                 <li class="active">
-                    <a href="<?php echo base_url() . "Dc/Dc/dalalead" ?>"><i class="icon-chart mr-1"></i> Dashboard</a>
+                    <a href="<?php echo base_url() . "Dc/Dc/dalalead" ?>"><i class="icon-chart mr-1"></i> Monitoring</a>
                 </li>
                 <li>
                     <a href="<?php echo base_url() . "Dc/Dc/campaign" ?>"><i class="icon-chart mr-1"></i> Blast Management</a>
                 </li>
                 <li>
                     <a href="<?php echo base_url() . "Dc/Dc/report" ?>"><i class="icon-chart mr-1"></i> Log</a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url() . "Dc/Dc/report_raw" ?>"><i class="icon-chart mr-1"></i> Data Lead</a>
                 </li>
             </ul>
 
@@ -256,6 +263,108 @@
 
                                 </div>
 
+                            </div>
+                            <div class="card  mt-3">
+                                <div class="card-header d-flex justify-content-between align-items-center">
+                                    <h6 class="card-title">WA INTERACTIVE</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-3">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="subheader">Active User</div>
+                                                    <div class="h4 mb-3 text-center">-</i></div>
+                                                </div>
+
+                                                <div class="progress progress-sm">
+                                                    <?php
+                                                    $percent_wa = 0;
+                                                    ?>
+                                                    <div class="progress-bar bg-blue" style="width: 0%" role="progressbar" aria-valuenow="<?php echo $percent_wa; ?>" aria-valuemin="0" aria-valuemax="100">
+                                                        <span class="visually-hidden"><?php echo number_format($percent_wa, 2); ?>% Complete</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-3">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="subheader">Total Trafik</div>
+                                                    <div class="h4 mb-3 text-center">-</i></div>
+                                                </div>
+                                                <div class="progress progress-sm">
+                                                    <?php
+                                                    $percent_email = 0;
+                                                    ?>
+                                                    <div class="progress-bar bg-blue" style="width: <?php echo $percent_email; ?>%" role="progressbar" aria-valuenow="<?php echo $percent_email; ?>" aria-valuemin="0" aria-valuemax="100">
+                                                        <span class="visually-hidden"><?php echo number_format($percent_email, 2); ?>% Complete</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="subheader">Detail Tagihan</div>
+                                                    <div class="h4 mb-3 text-center">-</i></div>
+                                                </div>
+                                                <div class="progress progress-sm">
+                                                    <?php
+                                                    $percent_sms =0;
+                                                    ?>
+                                                    <div class="progress-bar bg-blue" style="width: <?php echo $percent_sms; ?>%" role="progressbar" aria-valuenow="<?php echo $percent_sms; ?>" aria-valuemin="0" aria-valuemax="100">
+                                                        <span class="visually-hidden"><?php echo number_format($percent_sms, 2); ?>% Complete</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="subheader">Tagihan Tidak Sesuai</div>
+                                                    <div class="h4 mb-3 text-center">-</i></div>
+                                                </div>
+                                                <div class="progress progress-sm">
+                                                    <?php
+                                                    $percent_sms =0;
+                                                    ?>
+                                                    <div class="progress-bar bg-blue" style="width: <?php echo $percent_sms; ?>%" role="progressbar" aria-valuenow="<?php echo $percent_sms; ?>" aria-valuemin="0" aria-valuemax="100">
+                                                        <span class="visually-hidden"><?php echo number_format($percent_sms, 2); ?>% Complete</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                       
+                                    </div>
+                                    <div class="row  mt-3">
+                                        <div class="col-3">
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <div class="subheader">Metode Pembayaran</div>
+                                                    <div class="h4 mb-3 text-center">-</i></div>
+                                                </div>
+                                                <div class="progress progress-sm">
+                                                    <?php
+                                                    $percent_ovr =0;
+                                                    ?>
+                                                    <div class="progress-bar bg-blue" style="width: <?php echo $percent_ovr; ?>%" role="progressbar" aria-valuenow="<?php echo $percent_ovr; ?>" aria-valuemin="0" aria-valuemax="100">
+                                                        <span class="visually-hidden"><?php echo number_format($percent_ovr, 2); ?>% Complete</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        
+                                        
+
+                                    </div>
+                                </div>
                             </div>
 
                             <div class="mt-3">

@@ -13,7 +13,7 @@ var auxKey = 'key';
 var reasonTranslation;
 var pbxCampaignId = null;
 var loginTime = null;
-var base_url = window.location.origin + "/smartcollection";
+var base_url = window.location.origin + "/git_public/sc-sement5/";
 var aux_flag = false;
 $.ajaxSetup({
     headers: {
@@ -77,7 +77,7 @@ window.updateAgentStatus = function (agent_status = null, connected_number = nul
         formData.aux_id = auxState;
     }
 
-    document.getElementById('duration_status').innerHTML = GetDuration(Math.floor((nowDateTime.getTime() - currStatusTimestamp.getTime()) / 1000));
+    // document.getElementById('duration_status').innerHTML = GetDuration(Math.floor((nowDateTime.getTime() - currStatusTimestamp.getTime()) / 1000));
     // if (pbxCampaignId != null) {
     $.ajax({
         type: 'POST',
@@ -178,6 +178,7 @@ window.callbackStart = function (data) {
         webphone_api.setparameter('serveraddress', data['server']);
         webphone_api.setparameter('username', data['username']);
         webphone_api.setparameter('password', data['password']);
+        webphone_api.setparameter('transport', 'udp');
         extensionId = data['id'];
         webphone_api.start();
         loopFlag = true;
@@ -194,14 +195,14 @@ webphone_api.onCallStateChange(function (event, direction, peername, peerdisplay
         document.getElementById('btn_call').classList.add('btn-danger');
         document.getElementById('btn_call').classList.remove('btn-success');
 
-        if (direction == 1) {
-            // means it's outgoing call
-        }
-        else if (direction == 2) {
-            // means it's icoming call
+        // if (direction == 1) {
+        //     // means it's outgoing call
+        // }
+        // else if (direction == 2) {
+        // means it's icoming call
 
-            document.getElementById('incoming_call_layout').style.display = 'block';
-        }
+        document.getElementById('incoming_call_layout').style.display = 'block';
+        // }
 
         updateAgentStatus('Call Setup');
         sendEvent('Call setup');
@@ -393,24 +394,48 @@ window.Aux = function () //TODO standardize aux
 {
     auxState = parseInt(document.getElementById("drp_aux").selectedIndex);
     if (parseInt(auxState) != 0) {
-        if (webphone_api.isincall()) {
-            aux_pending_flag = true;
-        } else {
-            for (let index = 1; index < 10; index++) {
-                if (index != parseInt(auxState)) {
-                    document.getElementById('drp_aux_' + index).disabled = true;
-                }
+        // if (webphone_api.isincall()) {
+        //     aux_pending_flag = true;
+        // } else {
+        $("#call_control").show();
+        $("#status_ready").val(0);
+        $("#text_status").html('<i class="icon-close" ></i> AUX');
+        $("#text_status").attr('class', 'btn btn-outline-danger font-w-600 my-auto text-nowrap ml-auto add-event');
+        // $("#text_status").attr('class', 'btn btn-outline-success font-w-600 my-auto text-nowrap ml-auto add-event');
+        aux_flag = true;
+
+        document.getElementById('box_kosong').style.display = 'none';
+
+        aux_id=$("#drp_aux").val();
+        // console.log('<?php echo $data_aux->id; ?>');
+        loopFlag = true;
+
+        for (let index = 1; index < 10; index++) {
+            if (index != parseInt(auxState)) {
+                document.getElementById('drp_aux_' + index).disabled = true;
             }
-            Stop();
-            aux_flag = true;
-            document.getElementById('mizu_control').style.display = 'none';
         }
+        // Stop();
+        aux_flag = true;
+        updateAgentStatus('', '',aux_id);
+        // document.getElementById('mizu_control').style.display = 'none';
+        // }
     } else {
         // webphone_api.register();
-        Start();
+        // Start();
+       
+        document.getElementById('box_kosong').style.display = 'block';
+        // callDelayedNumber();
+        updateAgentStatus('Ready', '',0);
+        $("#status_ready").val(1);
+        getTicket();
         aux_flag = false;
-        document.getElementById('mizu_control').style.display = 'block';
-        callDelayedNumber();
+        console.log("Init Mizu");
+        $("#call_control").show();
+        
+        $("#text_status").html('<i class="icon-check" ></i> ONLINE');
+        $("#text_status").attr('class', 'btn btn-outline-success font-w-600 my-auto text-nowrap ml-auto add-event');
+        
         for (let index = 1; index < 10; index++) {
             document.getElementById('drp_aux_' + index).disabled = false;
         }

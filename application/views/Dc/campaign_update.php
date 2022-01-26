@@ -95,24 +95,27 @@
 
             <!-- START: Menu-->
             <ul id="side-menu" class="sidebar-menu">
-                <li>
-                    <a href="<?php echo base_url(); ?>"><i class="icon-home mr-1"></i> Home</a>
-                </li>
-                <li>
-                    <a href="<?php echo base_url() . "Dc/Dc" ?>"><i class="icon-chart mr-1"></i> Dashboard</a>
-                </li>
-                <li>
-                    <a href="<?php echo base_url() . "Dc/Dc/dalalead" ?>"><i class="icon-chart mr-1"></i> Data Lead</a>
-                </li>
-                <li>
-                    <a href="<?php echo base_url() . "Dc/Dc/engine" ?>"><i class="icon-chart mr-1"></i> Engine</a>
-                </li>
-                <li class="active">
-                    <a href="<?php echo base_url() . "Dc/Dc/campaign" ?>"><i class="icon-chart mr-1"></i> Blast Management</a>
-                </li>
-                <li>
-                    <a href="<?php echo base_url() . "Dc/Dc/report" ?>"><i class="icon-chart mr-1"></i> Report</a>
-                </li>
+                <ul id="side-menu" class="sidebar-menu">
+                    <li>
+                        <a href="<?php echo base_url(); ?>"><i class="icon-home mr-1"></i> Home</a>
+                    </li>
+
+                    <li>
+                        <a href="<?php echo base_url() . "Dc/Dc/datalead_dapros" ?>"><i class="icon-chart mr-1"></i> Analitic Data Customer</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url() . "Dc/Dc/dalalead" ?>"><i class="icon-chart mr-1"></i> Monitoring</a>
+                    </li>
+                    <li class="active">
+                        <a href="<?php echo base_url() . "Dc/Dc/campaign" ?>"><i class="icon-chart mr-1"></i> Blast Management</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url() . "Dc/Dc/report" ?>"><i class="icon-chart mr-1"></i> Log</a>
+                    </li>
+                    <li>
+                        <a href="<?php echo base_url() . "Dc/Dc/report_raw" ?>"><i class="icon-chart mr-1"></i> Data Lead</a>
+                    </li>
+                </ul>
 
 
             </ul>
@@ -201,9 +204,9 @@
                                 <select class="form-control" name="sms_template" id="sms_template">
                                     <?php
                                     foreach ($sms_template as $lp) {
-                                        $selected="";
-                                        if($campaign->sms_template == $lp->id){
-                                            $selected="selected";
+                                        $selected = "";
+                                        if ($campaign->sms_template == $lp->id) {
+                                            $selected = "selected";
                                         }
                                         echo "<option value='" . $lp->id . "' $selected>" . $lp->nama . "</option>";
                                     }
@@ -215,9 +218,9 @@
                                 <select class="form-control" name="wa_template" id="wa_template">
                                     <?php
                                     foreach ($wa_template as $lp) {
-                                        $selected="";
-                                        if($campaign->wa_template == $lp->MODEL){
-                                            $selected="selected";
+                                        $selected = "";
+                                        if ($campaign->wa_template == $lp->MODEL) {
+                                            $selected = "selected";
                                         }
                                         echo "<option value='" . $lp->MODEL . "' $selected>" . $lp->MODEL . "</option>";
                                     }
@@ -229,9 +232,9 @@
                                 <select class="form-control" name="ebs_template" id="ebs_template">
                                     <?php
                                     foreach ($ebs_template as $lp) {
-                                        $selected="";
-                                        if($campaign->ebs_template == $lp->id_template){
-                                            $selected="selected";
+                                        $selected = "";
+                                        if ($campaign->ebs_template == $lp->id_template) {
+                                            $selected = "selected";
                                         }
                                         echo "<option value='" . $lp->id_template . "' $selected>" . $lp->nama_template . "</option>";
                                     }

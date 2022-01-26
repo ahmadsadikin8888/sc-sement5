@@ -16,6 +16,7 @@ class Blast extends CI_Controller
         $this->load->model('Custom_model/Dim_date_model', 'Dim_date');
         $this->load->model('Custom_model/Dim_time_model', 'Dim_time');
         $this->load->model('Custom_model/Dim_periode_model', 'Dim_periode');
+        $this->load->model('Custom_model/Failover_model', 'failover');
         // $this->load->database();
     }
 
@@ -61,7 +62,7 @@ class Blast extends CI_Controller
                             'periode_key' => $this->Dim_periode->get_row(array('periode_value' => $row->periode))->periode_key,
                         );
                         $this->Fact_interaction->add($data_input);
-                        $return = $row->customer_key . ' : Interaction Success!'.$row->id;
+                        $return = $row->customer_key . ' : Interaction Success!' . $row->id;
                     }
                 }
             }
@@ -146,5 +147,82 @@ class Blast extends CI_Controller
             }
         }
         return $return;
+    }
+    function check_ready()
+    {
+        $return = 0;
+        $curl = curl_init();
+        $url = "https://infrix-pds1.infomedia.co.id/infra/api/queuestats.php?queueNum=303";
+
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => "",
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET",
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
+        ));
+
+        $response = curl_exec($curl);
+        $response = json_decode($response);
+        if (isset($response->ready)) {
+            $return = $response->ready;
+        }
+        return $return;
+    }
+
+    function call_ready($call_id, $dest)
+    {
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => 'https://infrix-pds1.infomedia.co.id/infra/api/calloutpds.php',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_SSL_VERIFYHOST => false,
+            CURLOPT_POSTFIELDS => '{
+    "call_id": "' . $call_id . '",
+    "dst": "' . $dest . '",
+    "queue": "303"
+}',
+            CURLOPT_HTTPHEADER => array(
+                'Authorization: Basic ZmJjYzAzOjFuZjBtZWRpQA==',
+                'Content-Type: application/json'
+            ),
+        ));
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        $response = json_decode($response);
+        // echo var_dump($response);
+    }
+    
+
+    public function run_ticket()
+    {
+        $ready = $this->check_ready();
+        // echo $ready;
+        if ($ready > 0) {
+            $data = $this->failover->live_query("SELECT * FROM trans WHERE DETAIL_STATUS='NEW POP UP' LIMIT $ready")->result();
+            if (count($data) > 0) {
+                foreach ($data as $dt) {
+                    $this->call_ready($dt->TRANS_ID, $dt->NO_KONTAK);
+                    $this->failover->live_query("UPDATE trans SET DETAIL_STATUS='0' WHERE TRANS_ID='" . $dt->TRANS_ID . "'");
+                    echo "call to : " . $dt->NO_KONTAK . "<br>";
+                }
+            }
+        }
     }
 }

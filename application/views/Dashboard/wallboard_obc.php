@@ -130,12 +130,20 @@
                     <div class="col-12 col-sm-6 col-xl-2 mt-3">
                         <div class="card">
                             <div class="card-body text-default border-bottom border-default border-w-5">
+                                <h2 class="text-center" id="user_aux">0</h2>
+                                <h6 class="text-center">Aux</h6>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-xl-2 mt-3">
+                        <div class="card">
+                            <div class="card-body text-default border-bottom border-default border-w-5">
                                 <h2 class="text-center" id="user_offline">0</h2>
                                 <h6 class="text-center">Offline</h6>
                             </div>
                         </div>
                     </div>
-                    <div class="col-12 col-sm-6 col-xl-4 mt-3">
+                    <div class="col-12 col-sm-6 col-xl-2 mt-3">
                         <div class="card">
                             <div class="card-body text-info border-bottom border-info border-w-5">
                                 <h2 class="text-center" id="contacted">0</h2>
@@ -228,17 +236,21 @@
     <!-- <script src="dist/js/home.script.js"></script> -->
     <!-- END: Page JS-->
     <script type="text/javascript">
-    var id_department = $('#department').val();
+        var id_department = $('#department').val();
+        var filt_ol = $('#filt_ol').val();
+        var filt_ready='';
+        var filt_idle='';
+        var filt_offline='';
         $.ajax({
             url: "<?php echo base_url('Dashboard/SmartCollection'); ?>/get_datawallboard",
-            data: "department_id="+ id_department +"&filt_ol=" + filt_ol + "&filt_ready=" + filt_ready + "&filt_idle=" + filt_idle + "&filt_offline=" + filt_offline,
+            data: "department_id=" + id_department + "&filt_ol=" + filt_ol + "&filt_ready=" + filt_ready + "&filt_idle=" + filt_idle + "&filt_offline=" + filt_offline,
             dataType: 'json',
             cache: false,
             success: function(hasil) {
                 $('#agent_wall').empty();
                 $.each(hasil, function(i, val) {
                     //$('#agent_wall').append('<div style="width:200px; margin:3px" class="btn '+val.alert+'"><img class="img-thumbnail" src="'+val.foto+'".jpg"/> <b><font size="4">'+val.username+'</font></b><br/><span style="margin-top:5px">'+val.dial_mode+' - '+val.extension+'</span><br/><small>'+val.icon+' '+val.agent_status+' Since '+val.last_exec+'</small><br/>'+val.login_user+'</div>');
-                    $('#agent_wall').append('<div style="width: 16%;" class="font-icon-list p-2 border  mx-1 mb-2 bg-' + val.alert + '"><div class="preview"><div class="card "><div class="card-content"><div class="card-image business-card"><div class="background-image-maker" style="background-image: url(' + val.foto + ');"></div><div class="holder-image"><img src="' + val.foto + '" alt="" style="min-height:200px;max-height:200px;" class="img-fluid"></div><div class="rating-block "><div class="starrr"></div></div></div><div class="card-body"><h5 class="card-title ">' + val.username + '</h5><div class="like">' + val.last_exec + '</div><h6 class="text-' + val.alert + ' ">' + val.agent_status + ' <small>(PDS-' + val.extension + ')</small></h6></div></div></div></div></div>');
+                    $('#agent_wall').append('<div style="width: 16%;" class="font-icon-list border  mx-1 mb-2 bg-' + val.alert + '"><div class="preview"><div class="card "><div class="card-content"><div class="card-image business-card"><div class="background-image-maker" style="background-image: url(' + val.foto + ');"></div><div class="holder-image"><img src="' + val.foto + '" alt="" style="min-height:200px;max-height:200px;" class="img-fluid"></div><div class="rating-block "><div class="starrr"></div></div></div><div class="card-body"><div class="like">' + val.last_exec + '</div><h6 class="">' + val.agent_status + ' <small>(PDS-' + val.login_user + ')</small></h6></div></div></div></div></div>');
                 });
             }
 
@@ -254,6 +266,7 @@
                 $('#user_idle').html(hasil2.user_idle);
                 $('#user_idle').html(hasil2.user_idle);
                 $('#user_offline').html(hasil2.user_offline);
+                $('#user_aux').html(hasil2.user_aux);
                 $('#contacted').html(hasil2.tot_call);
 
             }
@@ -317,18 +330,6 @@
 <script src="<?php echo base_url(); ?>assets/new_theme/dist/vendors/datatable/buttons/js/buttons.html5.min.js"></script>
 <script src="<?php echo base_url(); ?>assets/new_theme/dist/vendors/datatable/buttons/js/buttons.print.min.js"></script>
 <!-- END: Page Vendor JS-->
-
-<!-- START: Page Script JS-->
-<script src="<?php echo base_url(); ?>assets/new_theme/dist/js/datatable.script.js"></script>
-<!-- END: Page Script JS-->
-
-<!-- START: Page Vendor JS-->
-<script src="<?php echo base_url(); ?>assets/new_theme/dist/vendors/raphael/raphael.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/new_theme/dist/vendors/morris/morris.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/new_theme/dist/vendors/apexcharts/apexcharts.min.js"></script>
-<!-- END: Page Vendor JS-->
-<script src="<?php echo base_url(); ?>assets/new_theme/dist/vendors/chartjs/Chart.min.js"></script>
-<script src="<?php echo base_url(); ?>assets/new_theme/dist/js/chartjs-plugin-datalabels.min.js"></script>
 
 <!-- END: Back to top-->
 

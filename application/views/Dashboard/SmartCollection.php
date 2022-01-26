@@ -62,6 +62,27 @@
                 </div>
 
             </div>
+            <div class="row">
+                <div class="col-2">
+                    Mulai dari
+                    <input type="date" class='form-control'>
+                </div>
+                <div class="col-2">
+                    sampai
+                    <input type="date" class='form-control'>
+                </div>
+                <div class="col-3 ">
+                    Campaign
+                    <select class='form-control'>
+                        <option>All</option>
+                        <option>Infotag</option>
+                        <option>Reminding</option>
+                        <option>Courtesy</option>
+                        <!-- <option>Reminding</option> -->
+                    </select>
+                </div>
+
+            </div>
             <!-- END: Breadcrumbs-->
 
             <!-- START: Card Data-->
@@ -71,7 +92,7 @@
                         <div class="col-12 col-lg-12">
                             <div class="card">
                                 <div class="card-header  justify-content-between align-items-center">
-                                    <h6 class="card-title">Summary Order (today)</h6>
+                                    <h6 class="card-title">Summary Order By Channels </h6>
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body ">
@@ -86,7 +107,7 @@
                         <div class="col-12 col-lg-12   mt-3">
                             <div class="card">
                                 <div class="card-header  justify-content-between align-items-center">
-                                    <h6 class="card-title">Summary Unique Customer (today)</h6>
+                                    <h6 class="card-title">Summary Unique Customer</h6>
                                 </div>
                                 <div class="card-content">
                                     <div class="card-body">
@@ -100,19 +121,19 @@
                                             echo '<tr>
 	                                		<td>Lancar</td>
 	                                		<td>:</td>
-	                                		<td>Rp.' . $summary_unique_customer['bayar']['Lancar']['sum'] . ',-</td>
+	                                		<td>Rp.' . $data_lancar['Lancar']['sum_tagihan'] . ',-</td>
 	                                		</tr>';
                                             echo '<tr>
 	                                		<td>Tidak Lancar</td>
 	                                		<td>:</td>
-	                                		<td>Rp.' . $summary_unique_customer['bayar']['Tidak Lancar']['sum'] . ',-</td>
+	                                		<td>Rp.' . $data_lancar['Tidak Lancar']['sum_tagihan'] . ',-</td>
 	                                		</tr>';
 
-                                            echo '<tr>
-	                                		<td>Menunggak</td>
-	                                		<td>:</td>
-	                                		<td>Rp.' . (($summary_unique_customer['interaction']['sum_biling'] - $summary_unique_customer['bayar']['Lancar']['sum']) - $summary_unique_customer['bayar']['Tidak Lancar']['sum']) . ',-</td>
-	                                		</tr>';
+                                            // echo '<tr>
+                                            // <td>Menunggak</td>
+                                            // <td>:</td>
+                                            // <td>Rp.' . (($data_lancar['interaction']['sum_biling'] - $summary_unique_customer['bayar']['Lancar']['sum']) - $summary_unique_customer['bayar']['Tidak Lancar']['sum']) . ',-</td>
+                                            // </tr>';
 
                                             ?>
                                             <!-- <tr>
@@ -143,7 +164,7 @@
                         <div class="col-12 col-md-12">
                             <div class="card">
                                 <div class="card-header  justify-content-between align-items-center">
-                                    <h6 class="card-title">Summary Order by Channels (Today)</h6>
+                                    <h6 class="card-title">Summary Order by Channels</h6>
                                 </div>
                                 <div class="card-body table-responsive p-0">
 
@@ -160,24 +181,24 @@
                                         </thead>
                                         <tbody>
                                             <?php
-                                            $channel = array("WA", "SMS", "EMAIL", "OBC", "OVR", "TVMS");
+                                            // $channel = array("WA", "SMS", "EMAIL", "OBC", "OVR", "TVMS");
+                                            $ccode = array("PSTN" => "OBC", "wa" => "WA", "sms" => "SMS", "ovr" => "OVR", "tvms" => "TVMS", "email" => "EMAIL");
                                             $total = ['progress' => 0, 'success' => 0, 'unsuccess' => 0, 'all' => 0];
-                                            if (count($total_order_by_channel) > 0) {
+                                            if (count($order_channel) > 0) {
 
 
 
-
-                                                for ($i = 0; $i < count($channel); $i++) {
-                                                    $total['progress'] += $total_order_by_channel[$channel[$i]]['counting_progress'];
-                                                    $total['success'] += $total_order_by_channel[$channel[$i]]['counting_success'];
-                                                    $total['unsuccess'] += $total_order_by_channel[$channel[$i]]['counting_unsuccess'];
-                                                    $temp_total_channel = ($total_order_by_channel[$channel[$i]]['counting_progress'] + $total_order_by_channel[$channel[$i]]['counting_success'] + $total_order_by_channel[$channel[$i]]['counting_unsuccess']);
+                                                foreach ($ccode as $channel => $val_channel) {
+                                                    $total['progress'] += $order_channel[$channel]['order'];
+                                                    $total['success'] += $order_channel[$channel][1];
+                                                    $total['unsuccess'] += $order_channel[$channel][0];
+                                                    $temp_total_channel = ($order_channel[$channel]['order'] + $order_channel[$channel][1] + $order_channel[$channel][0]);
                                                     $total['all'] += $temp_total_channel;
                                                     echo '<tr >
-	                                		<td>' . $channel[$i] . '</td>
-	                                		<td>' . number_format($total_order_by_channel[$channel[$i]]['counting_progress']) . '</td>
-	                                		<td class="text-success">' . number_format($total_order_by_channel[$channel[$i]]['counting_success']) . '</td>
-	                                		<td class="text-danger">' . number_format($total_order_by_channel[$channel[$i]]['counting_unsuccess']) . '</td>
+	                                		<td>' . $val_channel . '</td>
+	                                		<td>' . number_format($order_channel[$channel]['order']) . '</td>
+	                                		<td class="text-success">' . number_format($order_channel[$channel][1]) . '</td>
+	                                		<td class="text-danger">' . number_format($order_channel[$channel][0]) . '</td>
 	                                		<td>' . $temp_total_channel . '</td>
 	                                		</tr>';
                                                 }
@@ -202,7 +223,7 @@
                         <div class="col-12 col-lg-12 mt-2">
                             <div class="card">
                                 <div class="card-header  justify-content-between align-items-center">
-                                    <h6 class="card-title">Summary Order by Regionial (Today)</h6>
+                                    <h6 class="card-title">Summary Order by Regional</h6>
                                 </div>
                                 <div class="card-body table-responsive p-0">
 
@@ -222,19 +243,19 @@
                                             $regional = array(1 => "1", 2 => "2", 3 => "3", 4 => "4", 5 => "5", 6 => "6", 7 => "7");
 
                                             $total = ['progress' => 0, 'success' => 0, 'unsuccess' => 0, 'all' => 0];
-                                            if (count($total_order_by_regional) > 0) {
-                                                for ($i = 1; $i <= count($regional); $i++) {
-                                                    $total['progress'] += $total_order_by_regional[$i]['counting_progress'];
-                                                    $total['success'] += $total_order_by_regional[$i]['counting_success'];
-                                                    $total['unsuccess'] += $total_order_by_regional[$i]['counting_unsuccess'];
-                                                    $temp_total_channel = ($total_order_by_regional[$i]['counting_progress'] + $total_order_by_regional[$i]['counting_success'] + $total_order_by_regional[$i]['counting_unsuccess']);
+                                            if (count($order_regional) > 0) {
+                                                foreach ($regional as $channel => $val_channel) {
+                                                    $total['progress'] += $order_regional["treg_" . $channel]['order'];
+                                                    $total['success'] += $order_regional["treg_" . $channel][1];
+                                                    $total['unsuccess'] += $order_regional["treg_" . $channel][0];
+                                                    $temp_total_channel = ($order_regional["treg_" . $channel]['order'] + $order_regional["treg_" . $channel][1] + $order_regional["treg_" . $channel][0]);
                                                     $total['all'] += $temp_total_channel;
                                                     echo '<tr >
-	                                		<td>Regional ' . $regional[$i] . '</td>
-	                                		<td>0</td>
-	                                		<td class="text-success">' . number_format($total_order_by_regional[$i]['counting_success']) . '</td>
-	                                		<td class="text-danger">' . number_format($total_order_by_regional[$i]['counting_unsuccess']) . '</td>
-	                                		<td>' . number_format($temp_total_channel) . '</td>
+	                                		<td>Regional ' . $val_channel . '</td>
+	                                		<td>' . number_format($order_regional["treg_" . $val_channel]['order']) . '</td>
+	                                		<td class="text-success">' . number_format($order_regional["treg_" . $channel][1]) . '</td>
+	                                		<td class="text-danger">' . number_format($order_regional["treg_" . $channel][0]) . '</td>
+	                                		<td>' . $temp_total_channel . '</td>
 	                                		</tr>';
                                                 }
                                                 echo '<tr >';
@@ -329,33 +350,15 @@
                             <h6 class="card-title">Total Order (Today)</h6>
                         </div> -->
                                 <div class="card-content">
+                                    <div class="card-footer text-muted">
+                                        Total Order : <span><?php echo $order_status['all']; ?></span>
+                                    </div>
                                     <div class="card-body p-0">
                                         <ul class="list-group list-unstyled">
                                             <?php
-                                            $total_success = array_sum(array_map(function ($item) {
-                                                return $item['count_order'];
-                                            }, $summary_order_by_unique_customer));
-                                            // $color_class = ['#1ee0ac', '#ffc107', '#17a2b8'];
-                                            // $color_class1 = ['success', 'warning', 'info'];
-                                            // if (count($summary_order_by_unique_customer) > 1) {
-                                            //     for ($i = 0; $i < count($summary_order_by_unique_customer); $i++) {
-                                            //         echo '<li class="p-4 border-bottom">
-                                            // 		<div class="w-100">
-                                            // 		<a href="#">Total Success ' . $summary_order_by_unique_customer[$i]['label_2'] . '</a>
-                                            // 		<div class="barfiller h-7 rounded" data-color="' . $color_class[$i] . '">
-                                            // 		<div class="tipWrap">
-                                            // 		<span class="tip rounded ' . $color_class1[$i] . '">
-                                            // 		<span class="tip-arrow"></span>
-                                            // 		</span>
-                                            // 		</div>
-                                            // 		<span class="fill" data-percentage="' . ((int) ($summary_order_by_unique_customer[$i]['count_order'] / $total_success) * 100) . '"></span>
-                                            // 		</div>
-                                            // 		</div>
-                                            // 		</li>';
-                                            //     }
-                                            // } else {
-                                            //     echo '<span class="text-center"> Tidak ada Data. </span>';
-                                            // }
+                                            $persen_sukses = (($order_status[1] / $order_status['all']) * 100);
+                                            $persen_fail = (($order_status[0] / $order_status['all']) * 100);
+                                            $persen_sisa = (($order_status['order'] / $order_status['all']) * 100);
                                             ?>
                                             <li class="p-4 border-bottom">
                                                 <div class="w-100">
@@ -366,7 +369,7 @@
                                                                 <span class="tip-arrow"></span>
                                                             </span>
                                                         </div>
-                                                        <span class="fill" data-percentage="82"></span>
+                                                        <span class="fill" data-percentage="<?php echo $persen_sukses; ?>"></span>
                                                     </div>
                                                 </div>
                                             </li>
@@ -379,20 +382,20 @@
                                                                 <span class="tip-arrow"></span>
                                                             </span>
                                                         </div>
-                                                        <span class="fill" data-percentage="18"></span>
+                                                        <span class="fill" data-percentage="<?php echo $persen_fail; ?>"></span>
                                                     </div>
                                                 </div>
                                             </li>
                                             <li class="p-4 border-bottom">
                                                 <div class="w-100">
-                                                    <a href="#">Sisa Order/Progress</a>
+                                                    <a href="#">Total Progress</a>
                                                     <div class="barfiller h-7" data-color="#17a2b8">
                                                         <div class="tipWrap">
                                                             <span class="tip rounded info">
                                                                 <span class="tip-arrow"></span>
                                                             </span>
                                                         </div>
-                                                        <span class="fill" data-percentage="0"></span>
+                                                        <span class="fill" data-percentage="<?php echo $persen_sisa; ?>"></span>
                                                     </div>
                                                 </div>
                                             </li>
@@ -400,9 +403,7 @@
 
                                         </ul>
                                     </div>
-                                    <div class="card-footer text-muted">
-                                        Total Order Success: <span><?php echo $total_success; ?></span>
-                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -503,19 +504,38 @@
             type: 'doughnut',
             data: {
                 datasets: [{
-                    data: [3, 28, 67],
+                    data: [<?php
+                            if (count($perchannel) > 0) {
+                                foreach ($perchannel as $chna) {
+                                    echo $chna->order_data . ",";
+                                }
+                            }
+                            ?>],
 
                     backgroundColor: [
-                        '#1e3d73',
-                        '#17a2b8',
-                        '#ffc107'
+                        <?php
+                        $color = array(0 => "#3C7484", 1 => "#B8EAAD", 2 => "#B8DE5F", 3 => "#B38626", 4 => "#CA1F8E", 5 => "#0749A6", 6 => "#D083ED");
+
+                        $n = 0;
+                        if (count($perchannel) > 0) {
+                            foreach ($perchannel as $chna) {
+                                echo "'" . $color[$n] . "',";
+                                $n++;
+                            }
+                        }
+                        ?>
                     ],
                     label: 'Dataset 1'
                 }],
                 labels: [
-                    'Progress',
-                    'Success',
-                    'Unsuccess'
+                    <?php
+                    $ccode = array("PSTN" => "OBC", "wa" => "WA", "sms" => "SMS", "ovr" => "OVR", "tvms" => "TVMS", "email" => "EMAIL");
+                    if (count($perchannel) > 0) {
+                        foreach ($perchannel as $chna) {
+                            echo "'" . $ccode[$chna->channel] . "',";
+                        }
+                    }
+                    ?>
                 ],
 
             },
@@ -536,26 +556,22 @@
             }
         };
 
-        <?php
-        $dataset = array_column($summary_unique_customer, 'count_status');
-        $datalabel = array_column($summary_unique_customer, 'label');
-        ?>
+
         var config2 = {
             type: 'doughnut',
             data: {
                 datasets: [{
-                    data: [<?php echo intval($summary_unique_customer['bayar']['Lancar']['count']) ?>, <?php echo intval($summary_unique_customer['bayar']['Tidak Lancar']['count_status']) ?>, <?php echo intval($summary_unique_customer['interaction']['count_status']) ?>],
+                    data: [<?php echo intval($data_lancar['Lancar']['count_status']) ?>, <?php echo intval($data_lancar['Tidak Lancar']['count_status']) ?>],
                     backgroundColor: [
                         '#1e3d73',
-                        '#17a2b8',
-                        '#ffc107'
+                        '#17a2b8'
                     ],
                     label: 'Dataset 1'
                 }],
                 labels: [
                     'Lancar',
                     'Tidak Lancar',
-                    'Menunggak'
+                    // 'Menunggak'
                 ]
 
             },

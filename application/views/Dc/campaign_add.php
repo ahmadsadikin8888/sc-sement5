@@ -98,14 +98,21 @@
                 <li>
                     <a href="<?php echo base_url(); ?>"><i class="icon-home mr-1"></i> Home</a>
                 </li>
+
                 <li>
-                    <a href="<?php echo base_url() . "Dc/Dc/dalalead" ?>"><i class="icon-chart mr-1"></i> Dashboard</a>
+                    <a href="<?php echo base_url() . "Dc/Dc/datalead_dapros" ?>"><i class="icon-chart mr-1"></i> Analitic Data Customer</a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url() . "Dc/Dc/dalalead" ?>"><i class="icon-chart mr-1"></i> Monitoring</a>
                 </li>
                 <li class="active">
                     <a href="<?php echo base_url() . "Dc/Dc/campaign" ?>"><i class="icon-chart mr-1"></i> Blast Management</a>
                 </li>
                 <li>
                     <a href="<?php echo base_url() . "Dc/Dc/report" ?>"><i class="icon-chart mr-1"></i> Log</a>
+                </li>
+                <li>
+                    <a href="<?php echo base_url() . "Dc/Dc/report_raw" ?>"><i class="icon-chart mr-1"></i> Data Lead</a>
                 </li>
 
 
